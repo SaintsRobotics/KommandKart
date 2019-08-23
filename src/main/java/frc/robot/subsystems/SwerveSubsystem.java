@@ -45,11 +45,11 @@ public class SwerveSubsystem extends Subsystem {
      * The translation and rotation speeds, shift according to how much speed is
      * input.
      * 
-     * @param translationX movement in the left and right direction
-     * @param translationY movement in the forward and backward direction
+     * @param transX movement in the left and right direction
+     * @param transY movement in the forward and backward direction
      * @param rotation     the speed at which the robot is to rotate
      */
-    public void dynamicGainDrive(double translationX, double translationY, double rotation) {
+    public void dynamicGainDrive(double transX, double transY, double rotation) {
 
         // Doing math with each of the vectors for the SwerveWheels
         // Calculating the rotation vector, then adding that to the translation vector
@@ -57,9 +57,9 @@ public class SwerveSubsystem extends Subsystem {
         double[][] vectors = new double[m_wheels.length][2];
         for (int i = 0; i < m_wheels.length; i++) {
             vectors[i][0] = m_wheels[i].getRotationVector()[0] * (1 / this.m_maxWheelDistance)
-                    * (rotation * STATIC_ROT_COEF) + (translationX * STATIC_TRANS_COEF);
+                    * (rotation * STATIC_ROT_COEF) + (transX * STATIC_TRANS_COEF);
             vectors[i][1] = m_wheels[i].getRotationVector()[1] * (1 / this.m_maxWheelDistance)
-                    * (rotation * STATIC_ROT_COEF) + (translationY * STATIC_TRANS_COEF);
+                    * (rotation * STATIC_ROT_COEF) + (transY * STATIC_TRANS_COEF);
             vectors[i] = AngleUtilities.cartesianToPolar(vectors[i]);
         }
 
@@ -90,8 +90,8 @@ public class SwerveSubsystem extends Subsystem {
      * There is a maximum speed at which the robot will rotate, and maximum speed at
      * which the robot will translate.
      * 
-     * @param translationX movement in the left and right direction
-     * @param translationY movement in the forward and backward direction
+     * @param transX movement in the left and right direction
+     * @param transY movement in the forward and backward direction
      * @param rotation     the speed at which the robot is to rotate
      */
     public void staticGainDrive(double transX, double transY, double rotation) {
@@ -102,9 +102,9 @@ public class SwerveSubsystem extends Subsystem {
         double[][] vectors = new double[m_wheels.length][2];
         for (int i = 0; i < m_wheels.length; i++) {
             vectors[i][0] = m_wheels[i].getRotationVector()[0] * (1 / this.m_maxWheelDistance)
-                    * (rotation * STATIC_ROT_COEF) + (translationX * STATIC_TRANS_COEF);
+                    * (rotation * STATIC_ROT_COEF) + (transX * STATIC_TRANS_COEF);
             vectors[i][1] = m_wheels[i].getRotationVector()[1] * (1 / this.m_maxWheelDistance)
-                    * (rotation * STATIC_ROT_COEF) + (translationY * STATIC_TRANS_COEF);
+                    * (rotation * STATIC_ROT_COEF) + (transY * STATIC_TRANS_COEF);
             vectors[i] = AngleUtilities.cartesianToPolar(vectors[i]);
         }
 
