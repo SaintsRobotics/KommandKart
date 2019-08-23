@@ -1,17 +1,7 @@
 package frc.robot.commands;
 
-import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
-import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.util.PidConfig;
-import frc.robot.util.PidSender;
 
 /**
  * Calculates the amount the robot must rotate and simulates that as joystick
