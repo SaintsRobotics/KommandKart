@@ -11,6 +11,7 @@ import frc.robot.util.PidConfig;
 
 /**
  * Calculates the amount the robot must rotate and simulates that as joystick movement.  The drive can still translate the robot.
+ * Instantiate once for every heading, pid configs stay the same.
  */
 public class ToHeadingCommand extends Command {
 
@@ -42,9 +43,7 @@ public class ToHeadingCommand extends Command {
 		this.m_pidController.setInputRange(0, 360);
 		this.m_pidController.setContinuous(true);
 		this.m_pidController.setOutputRange(-1, 1);
-
 		this.m_pidController.reset();
-		this.m_pidController.enable();
 	}
 
 	// Called just before this Command runs the first time

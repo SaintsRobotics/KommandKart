@@ -69,6 +69,7 @@ public class OI {
   public static int RIGHT_STICK_BUTTON = 10;
 
   public static Joystick xboxController = new Joystick(0);
+  public static Joystick oppBoard = new Joystick(1);
 
   // DRIVER CONTROLS
   public static DoubleSupplier transX = () -> xboxController.getRawAxis(LEFT_STICK_X);
@@ -76,6 +77,8 @@ public class OI {
   public static DoubleSupplier rotation = () -> xboxController.getRawAxis(RIGHT_STICK_X);
   public static BooleanSupplier absoluteDrive = () -> !xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
+
+  public static DoubleSupplier liftDrive = () -> -oppBoard.getRawAxis(1);
 
   public OI() {
   }
