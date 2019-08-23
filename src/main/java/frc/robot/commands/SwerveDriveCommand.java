@@ -1,62 +1,31 @@
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.OI;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class SwerveDriveCommand extends Command {
 
 	private SwerveSubsystem m_subsystem;
-	private DoubleSupplier m_transX;
-	private DoubleSupplier m_transY;
-	private DoubleSupplier m_rotation;
-	private BooleanSupplier m_absolute;
+	private DoubleSupplier m_gyro;
 	private boolean m_dynamicGain;
 
 	/**
 	 * 
 	 * @param subsystem     swerve drive subsystem
-	 * @param transX        joystick access method for moving the robot right and
-	 *                      left
-	 * @param transY        joystick access method for moving the robot back and
-	 *                      forth
-	 * @param rotation      joystick access method for rotating the robot
-	 * @param absoluteDrive whether or not the robot will drive relative to the
-	 *                      direction it's facing or the direction it started in.
-	 *                      Invert this to have absolute drive as default.
+	 * @param gyro			gyroscope for absolute driving
+	 * @param dynamicGain   drive with dynamic translation/rotation gain or static
+	 *                      translation/rotation gain. defaults to true.  <br>*note that dynamic gain is used everywhere else in the code
 	 */
-	public SwerveDriveCommand(SwerveSubsystem subsystem, DoubleSupplier transX, DoubleSupplier transY,
-			DoubleSupplier rotation, BooleanSupplier absoluteDrive) {
+	public SwerveDriveCommand(SwerveSubsystem subsystem, DoubleSupplier gyro, boolean dynamicGain) {
 		this.m_subsystem = subsystem;
 		requires(this.m_subsystem);
 
-		this.m_transX = transX;
-		this.m_transY = transY;
-		this.m_rotation = rotation;
-		this.m_absolute = absoluteDrive;
-		this.m_dynamicGain = true;
-	}
+		this.m_gyro = gyro;
 
-	/**
-	 * 
-	 * @param subsystem     swerve drive subsystem
-	 * @param transX        joystick access method for moving the robot right and
-	 *                      left
-	 * @param transY        joystick access method for moving the robot back and
-	 *                      forth
-	 * @param rotation      joystick access method for rotating the robot
-	 * @param absoluteDrive whether or not the robot will drive relative to the
-	 *                      direction it's facing or the direction it started in.
-	 *                      invert this to have absolute drive as default
-	 * @param dynamicGain   drive with dynamic translation/rotation gain or static
-	 *                      translation/rotation gain. defaults to true
-	 */
-	public SwerveDriveCommand(SwerveSubsystem subsystem, DoubleSupplier transX, DoubleSupplier transY,
-			DoubleSupplier rotation, BooleanSupplier absoluteDrive, boolean dynamicGain) {
-		this(subsystem, transX, transY, rotation, absoluteDrive);
-		this.m_dynamicGain = dynamicGain;
+		this.m_dynamicGain = true;
 	}
 
 	// Called just before this Command runs the first time
@@ -67,12 +36,21 @@ public class SwerveDriveCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		double angle = this.m_gyro.getAsDouble();
+		double x = OI.transX.getAsDouble();
+		double y = OI.transY.getAsDouble();
+
+		if (OI.absoluteDrive.getAsBoolean()) {
+			x = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
+			y = (x * Math.sin(Math.toRadians(angle))) + (y * Math.cos(Math.toRadians(angle)));
+		}
+
 		if (m_dynamicGain) {
-			m_subsystem.dynamicGainDrive(this.m_transX.getAsDouble(), this.m_transY.getAsDouble(),
-					this.m_rotation.getAsDouble());
+			m_subsystem.dynamicGainDrive(x, y,
+					OI.rotation.getAsDouble());
 		} else {
-			m_subsystem.staticGainDrive(this.m_transX.getAsDouble(), this.m_transY.getAsDouble(),
-					this.m_rotation.getAsDouble());
+			m_subsystem.staticGainDrive(x, y,
+					OI.rotation.getAsDouble());
 		}
 
 	}
