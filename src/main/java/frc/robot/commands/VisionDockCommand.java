@@ -53,7 +53,7 @@ public class VisionDockCommand extends Command {
 		this.m_distancePid.setOutputRange(-1, 1);
 		this.m_distancePid.setInputRange(-20, 20);
 		this.m_distancePid.setContinuous(false);
-		this.m_distancePid.reset();;
+		this.m_distancePid.reset();
 	}
 
 	// Called just before this Command runs the first time
