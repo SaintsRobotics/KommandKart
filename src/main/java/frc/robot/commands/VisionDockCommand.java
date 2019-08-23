@@ -86,9 +86,9 @@ public class VisionDockCommand extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		boolean joysticksAreZero = (OI.transX.getAsDouble() == 0) && (OI.transY.getAsDouble() == 0) && (OI.rotation.getAsDouble() == 0);
+		boolean joysticksAreZero = (OI.transX.getAsDouble() == 0) || (OI.transY.getAsDouble() == 0) || (OI.rotation.getAsDouble() == 0);
 		boolean pidsDone = this.m_translationPid.onTarget() && this.m_distancePid.onTarget();
-		return pidsDone && joysticksAreZero;
+		return pidsDone || !joysticksAreZero;
 	}
 
 	// Called once after isFinished returns true
