@@ -94,7 +94,7 @@ public class SwerveSubsystem extends Subsystem {
      * @param translationY movement in the forward and backward direction
      * @param rotation     the speed at which the robot is to rotate
      */
-    public void staticGainDrive(double translationX, double translationY, double rotation) {
+    public void staticGainDrive(double transX, double transY, double rotation) {
 
         // Doing math with each of the vectors for the SwerveWheels
         // Calculating the rotation vector, then adding that to the translation vector
