@@ -77,7 +77,7 @@ public class ToHeadingCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		this.m_pidController.disable();
+		this.m_pidController.reset();
 	}
 
 	// Called when another command which requires one or more of the same

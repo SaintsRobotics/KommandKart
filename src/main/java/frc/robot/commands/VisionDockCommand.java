@@ -75,6 +75,9 @@ public class VisionDockCommand extends Command {
 
 		this.m_translationPid.enable();
 		this.m_distancePid.enable();
+
+		this.m_translationPid.setSetpoint(this.m_translationTarget);
+		this.m_distancePid.setSetpoint(this.m_distanceTarget);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
