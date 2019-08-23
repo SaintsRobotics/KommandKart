@@ -72,7 +72,7 @@ public class OI {
 
   // DRIVER CONTROLS
   public static DoubleSupplier transX = () -> xboxController.getRawAxis(LEFT_STICK_X);
-  public static DoubleSupplier transY = () -> xboxController.getRawAxis(LEFT_STICK_Y);
+  public static DoubleSupplier transY = () -> -xboxController.getRawAxis(LEFT_STICK_Y);
   public static DoubleSupplier rotation = () -> xboxController.getRawAxis(RIGHT_STICK_X);
   public static BooleanSupplier absoluteDrive = () -> !xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
