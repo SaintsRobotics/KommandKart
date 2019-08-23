@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static OI m_oi;
+	public static SubsystemMap m_subsystemMap;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -33,6 +34,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
+		m_subsystemMap = new SubsystemMap();
 
 		RobotMap.gyro.calibrate();
 		// chooser.addOption("My Auto", new MyAutoCommand());
