@@ -18,6 +18,7 @@ public class CargoIntakeCommand extends Command {
 	 */
 	public CargoIntakeCommand(CargoIntakeSubsystem subsystem, double value) {
 		this.m_subsystem = subsystem;
+		requires(this.m_subsystem);
 		this.m_value = value;
 	}
 

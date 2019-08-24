@@ -15,6 +15,7 @@ public class LiftDriveCommand extends Command {
 
 	public LiftDriveCommand(LiftSubsystem subsystem) {
 		this.m_subsystem = subsystem;
+		requires(this.m_subsystem);
 	}
 
 	// Called just before this Command runs the first time

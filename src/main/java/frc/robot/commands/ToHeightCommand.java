@@ -19,6 +19,7 @@ public class ToHeightCommand extends Command {
 	
 	public ToHeightCommand(LiftSubsystem subsystem, PIDSource encoder, double targetHeight, PidConfig pidConfig) {
 		this.m_subsystem = subsystem;
+		requires(this.m_subsystem);
 		this.m_targetHeight = targetHeight;
 
 		this.m_pidController = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, encoder, (output) -> this.m_pidOutput = output * this.SCALE);
