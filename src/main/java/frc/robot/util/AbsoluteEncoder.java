@@ -10,6 +10,7 @@ public class AbsoluteEncoder implements PIDSource {
 	// it uses the potentiometer values as voltage and correlates them to rotation
 	// degrees
 
+	private double channel;
 	private AnalogInput analogIn;
 	private double offset; // the offset from zero for each motor
 	private PIDSourceType sourceType;
@@ -17,6 +18,7 @@ public class AbsoluteEncoder implements PIDSource {
 
 	public AbsoluteEncoder(int channel, double offset, boolean isInverted) {
 		analogIn = new AnalogInput(channel);
+		this.channel = channel;
 		this.offset = offset;
 		this.sourceType = PIDSourceType.kDisplacement;
 
@@ -46,6 +48,10 @@ public class AbsoluteEncoder implements PIDSource {
 	@Override
 	public double pidGet() {
 		return this.getRotation();
+	}
+
+	public double getChannel() {
+		return this.channel;
 	}
 
 }

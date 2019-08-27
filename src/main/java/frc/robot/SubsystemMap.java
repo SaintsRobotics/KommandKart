@@ -14,9 +14,13 @@ public class SubsystemMap {
 	public static CargoIntakeCommand cargoIntake;
 
 	/**
-	 * This method must be called inside Robot.robotInit() and it must construct all of the subsystems.
+	 * This method must be called inside Robot.robotInit() and it must construct all
+	 * of the subsystems.
 	 */
 	public SubsystemMap() {
-		swerveSubsystem = new SwerveSubsystem(new SwerveWheel[] {RobotMap.rightFrontWheel, RobotMap.leftFrontWheel, RobotMap.leftBackWheel, RobotMap.rightBackWheel}, new double[] {0, 0}, RobotMap.gyro);
+		swerveSubsystem = new SwerveSubsystem(
+				new SwerveWheel[] { RobotMap.rightFrontWheel, RobotMap.leftFrontWheel, RobotMap.leftBackWheel,
+						RobotMap.rightBackWheel },
+				new double[] { 0, 0 }, () -> ((RobotMap.gyro.getAngle() + 360) % 360) + 360);
 	}
 }
