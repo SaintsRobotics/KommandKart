@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.AbsoluteEncoder;
 import frc.robot.util.PidConfig;
 
 /**
@@ -117,6 +119,10 @@ public class SwerveWheel {
 
 	public double getTurnSpeed() {
 		return this.m_pidController.get();
+	}
+
+	public PIDController getPidController() {
+		return this.m_pidController;
 	}
 
 }

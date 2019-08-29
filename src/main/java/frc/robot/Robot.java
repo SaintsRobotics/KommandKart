@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static OI m_oi;
+	public static RobotMap m_robotMap;
 	public static SubsystemMap m_subsystemMap;
 
 	Command m_autonomousCommand;
@@ -33,12 +37,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		m_robotMap = new RobotMap();
 		m_oi = new OI();
 		m_subsystemMap = new SubsystemMap();
 
-		RobotMap.gyro.calibrate();
+		// RobotMap.gyro.calibrate();
 		// chooser.addOption("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+
 	}
 
 	/**
@@ -52,6 +58,21 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
+		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation());
+		SmartDashboard.putNumber("left front ", RobotMap.leftFrontEncoder.getRotation());
+		SmartDashboard.putNumber("left back ", RobotMap.leftBackEncoder.getRotation());
+		SmartDashboard.putNumber("right back ", RobotMap.rightBackEncoder.getRotation());
+
+		SmartDashboard.putNumber("right front error ", RobotMap.rightFrontWheel.getPidController().getError());
+		SmartDashboard.putNumber("left front error ", RobotMap.leftFrontWheel.getPidController().getError());
+		SmartDashboard.putNumber("left back error ", RobotMap.leftBackWheel.getPidController().getError());
+		SmartDashboard.putNumber("right back error ", RobotMap.rightBackWheel.getPidController().getError());
+
+		SmartDashboard.putNumber("transX", OI.transX.getAsDouble());
+		SmartDashboard.putNumber("transY", OI.transY.getAsDouble());
+		SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
+		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
+
 	}
 
 	/**
@@ -122,6 +143,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
 	}
 
 	/**

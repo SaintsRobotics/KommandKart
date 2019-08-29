@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import frc.robot.subsystems.SwerveWheel;
@@ -56,10 +57,10 @@ public class RobotMap {
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	// Lift
-	public static SpeedController lift;
+	public static SpeedController lift = new Talon(9);
 	public static Encoder liftEncoder;
-	public static DigitalInput upperLiftLimit;
-	public static DigitalInput lowerLiftLimit;
+	public static DigitalInput upperLiftLimit = new DigitalInput(0);
+	public static DigitalInput lowerLiftLimit = new DigitalInput(1);
 
 	// Cargo Lift
 	public static SpeedController cargoLift;
@@ -67,9 +68,13 @@ public class RobotMap {
 	public static DigitalInput cargoUpperLiftLimit;
 	public static DigitalInput cargoLowerLiftLimit;
 
-	// Cargo Intake
-	public static SpeedController cargoIntake;
+	// // Cargo Intake
+	public static SpeedController cargoIntake = new Talon(10);
 	public static DigitalInput cargoLimitSwitch;
+
+	// Arms
+	public static SpeedController arm = new CANSparkMax(6, MotorType.kBrushless);
+	// needs encoder
 
 	public RobotMap() {
 		((CANSparkMax) rightFrontDrive).setSmartCurrentLimit(35, 60, 150);
@@ -78,9 +83,11 @@ public class RobotMap {
 		((CANSparkMax) rightFrontDrive).setSmartCurrentLimit(35, 60, 150);
 		leftBackDrive.setInverted(true);
 		leftFrontDrive.setInverted(true);
+
 		leftFrontTurn.setInverted(true);
 		leftBackTurn.setInverted(true);
 		rightBackTurn.setInverted(true);
+
 	}
 
 }

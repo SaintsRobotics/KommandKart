@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Robot;
+import frc.robot.commands.CargoIntakeCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -80,7 +81,12 @@ public class OI {
 
   public static DoubleSupplier liftDrive = () -> -oppBoard.getRawAxis(1);
 
+  private static Button intakeIn = new JoystickButton(xboxController, BUTTON_B);
+  private static Button intakeOut = new JoystickButton(xboxController, BUTTON_X);
+
   public OI() {
+    // intakeIn.whileHeld(new CargoIntakeCommand(SubsystemMap.cargoIntake, -1));
+    // intakeOut.whileHeld(new CargoIntakeCommand(SubsystemMap.cargoIntake, 1));
   }
 
 }

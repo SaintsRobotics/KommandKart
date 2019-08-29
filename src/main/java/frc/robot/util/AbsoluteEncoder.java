@@ -31,6 +31,7 @@ public class AbsoluteEncoder implements PIDSource {
 	}
 
 	public double getRotation() { // in degrees
+
 		return (this.analogIn.getVoltage() * this.voltageToDegrees + offset) % 360;
 
 	}

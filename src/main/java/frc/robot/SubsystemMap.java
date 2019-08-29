@@ -1,6 +1,8 @@
 package frc.robot;
 
-import frc.robot.commands.CargoIntakeCommand;
+import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.subsystems.ArmsSubsystem;
+import frc.robot.subsystems.CargoIntakeSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.SwerveWheel;
@@ -11,7 +13,8 @@ import frc.robot.subsystems.SwerveWheel;
 public class SubsystemMap {
 	public static SwerveSubsystem swerveSubsystem;
 	public static LiftSubsystem lift;
-	public static CargoIntakeCommand cargoIntake;
+	public static CargoIntakeSubsystem cargoIntake;
+	public static ArmsSubsystem arms;
 
 	/**
 	 * This method must be called inside Robot.robotInit() and it must construct all
@@ -22,5 +25,12 @@ public class SubsystemMap {
 				new SwerveWheel[] { RobotMap.rightFrontWheel, RobotMap.leftFrontWheel, RobotMap.leftBackWheel,
 						RobotMap.rightBackWheel },
 				new double[] { 0, 0 }, () -> ((RobotMap.gyro.getAngle() + 360) % 360) + 360);
+
+		// arms = new ArmsSubsystem(RobotMap.arm);
+		// cargoIntake = new CargoIntakeSubsystem(RobotMap.cargoIntake, new
+		// DigitalInput(0));
+
+		lift = new LiftSubsystem(RobotMap.lift, RobotMap.upperLiftLimit, RobotMap.lowerLiftLimit);
+
 	}
 }

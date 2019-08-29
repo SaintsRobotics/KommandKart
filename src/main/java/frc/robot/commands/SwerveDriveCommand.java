@@ -14,10 +14,12 @@ public class SwerveDriveCommand extends Command {
 
 	/**
 	 * 
-	 * @param subsystem     swerve drive subsystem
-	 * @param gyro			gyroscope for absolute driving
-	 * @param dynamicGain   drive with dynamic translation/rotation gain or static
-	 *                      translation/rotation gain. defaults to true.  <br>*note that dynamic gain is used everywhere else in the code
+	 * @param subsystem   swerve drive subsystem
+	 * @param gyro        gyroscope for absolute driving
+	 * @param dynamicGain drive with dynamic translation/rotation gain or static
+	 *                    translation/rotation gain. defaults to true. <br>
+	 *                    *note that dynamic gain is used everywhere else in the
+	 *                    code
 	 */
 	public SwerveDriveCommand(SwerveSubsystem subsystem, DoubleSupplier gyro, boolean dynamicGain) {
 		this.m_subsystem = subsystem;
@@ -46,11 +48,18 @@ public class SwerveDriveCommand extends Command {
 		}
 
 		if (m_dynamicGain) {
-			m_subsystem.dynamicGainDrive(x, y,
-					OI.rotation.getAsDouble());
+			if (Math.abs(OI.rotation.getAsDouble()) < 0.1) {
+				m_subsystem.dynamicGainDrive(x, y, 0.0);
+				return;
+			}
+			m_subsystem.dynamicGainDrive(x, y, OI.rotation.getAsDouble());
+
 		} else {
-			m_subsystem.staticGainDrive(x, y,
-					OI.rotation.getAsDouble());
+			if (Math.abs(OI.rotation.getAsDouble()) < 0.1) {
+				m_subsystem.staticGainDrive(x, y, 0.0);
+				return;
+			}
+			m_subsystem.staticGainDrive(x, y, OI.rotation.getAsDouble());
 		}
 
 	}

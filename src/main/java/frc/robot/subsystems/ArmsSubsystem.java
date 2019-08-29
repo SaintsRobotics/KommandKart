@@ -3,15 +3,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.commands.DriveArmsCommand;
 
-public class CargoIntakeSubsystem extends Subsystem {
+public class ArmsSubsystem extends Subsystem {
 
 	private SpeedController m_motor;
-	private DigitalInput m_limitSwitch;
 
-	public CargoIntakeSubsystem(SpeedController motor, DigitalInput limitSwitch) {
+	public ArmsSubsystem(SpeedController motor) {
 		this.m_motor = motor;
-		this.m_limitSwitch = limitSwitch;
 	}
 
 	/**
@@ -19,13 +18,12 @@ public class CargoIntakeSubsystem extends Subsystem {
 	 *              intakes, negative outtakes. within the range of -1 to 1
 	 */
 	public void drive(double speed) {
-		// if (!this.m_limitSwitch.get()) {
 		this.m_motor.set(speed);
-		// }
 	}
 
 	@Override
 	public void initDefaultCommand() {
+		setDefaultCommand(new DriveArmsCommand(this));
 	}
 
 }
