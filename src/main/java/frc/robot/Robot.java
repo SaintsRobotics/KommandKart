@@ -41,7 +41,8 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		m_subsystemMap = new SubsystemMap();
 
-		// RobotMap.gyro.calibrate();
+		RobotMap.gyro.calibrate();
+		RobotMap.gyro.reset();
 		// chooser.addOption("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 

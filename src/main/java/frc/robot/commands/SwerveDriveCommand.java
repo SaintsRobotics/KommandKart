@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -41,11 +42,16 @@ public class SwerveDriveCommand extends Command {
 		double angle = this.m_gyro.getAsDouble();
 		double x = OI.transX.getAsDouble();
 		double y = OI.transY.getAsDouble();
+		double rotation = OI.rotation.getAsDouble();
+		String mode = "robot relative";
 
 		if (OI.absoluteDrive.getAsBoolean()) {
 			x = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
 			y = (x * Math.sin(Math.toRadians(angle))) + (y * Math.cos(Math.toRadians(angle)));
+			mode = "field relative";
 		}
+
+		SmartDashboard.putString("Mode", mode);
 
 		if (m_dynamicGain) {
 			if (Math.abs(OI.rotation.getAsDouble()) < 0.1) {
