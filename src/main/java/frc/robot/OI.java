@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Robot;
 import frc.robot.commands.CargoIntakeCommand;
+import frc.robot.commands.ResetGyroCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -76,7 +77,7 @@ public class OI {
   public static DoubleSupplier transX = () -> xboxController.getRawAxis(LEFT_STICK_X);
   public static DoubleSupplier transY = () -> -xboxController.getRawAxis(LEFT_STICK_Y);
   public static DoubleSupplier rotation = () -> xboxController.getRawAxis(RIGHT_STICK_X);
-  public static BooleanSupplier absoluteDrive = () -> !xboxController.getRawButton(RIGHT_BUMPER);
+  public static BooleanSupplier absoluteDrive = () -> xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
 
   public static DoubleSupplier liftDrive = () -> -oppBoard.getRawAxis(1);
@@ -84,9 +85,14 @@ public class OI {
   private static Button intakeIn = new JoystickButton(xboxController, BUTTON_B);
   private static Button intakeOut = new JoystickButton(xboxController, BUTTON_X);
 
+  private static Button resetGyro = new JoystickButton(xboxController, START_BUTTON);
+
   public OI() {
     // intakeIn.whileHeld(new CargoIntakeCommand(SubsystemMap.cargoIntake, -1));
     // intakeOut.whileHeld(new CargoIntakeCommand(SubsystemMap.cargoIntake, 1));
+
+    resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
+
   }
 
 }

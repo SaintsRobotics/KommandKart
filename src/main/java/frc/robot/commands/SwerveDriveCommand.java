@@ -45,6 +45,9 @@ public class SwerveDriveCommand extends Command {
 		double rotation = OI.rotation.getAsDouble();
 		String mode = "robot relative";
 
+		// if (Math.abs(x) < 0.075 && Math.abs(y) < 0.075 && Math.abs(rotation) < 0.075)
+		// return;
+
 		if (OI.absoluteDrive.getAsBoolean()) {
 			x = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
 			y = (x * Math.sin(Math.toRadians(angle))) + (y * Math.cos(Math.toRadians(angle)));
