@@ -5,11 +5,12 @@ import frc.robot.OI;
 import frc.robot.subsystems.LiftSubsystem;
 
 /**
- * Drives lift based on joystick command.  Is the default command for LiftSubsystem
+ * Drives lift based on joystick command. Is the default command for
+ * LiftSubsystem
  */
 public class LiftDriveCommand extends Command {
 
-	private final double SCALE = 1; //value between 0 and 1 by which input to the lift is scaled
+	private final double SCALE = 0.5; // value between 0 and 1 by which input to the lift is scaled
 
 	private LiftSubsystem m_subsystem;
 

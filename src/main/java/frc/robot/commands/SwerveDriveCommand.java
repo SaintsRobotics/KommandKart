@@ -2,10 +2,13 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.util.PidConfig;
 
 public class SwerveDriveCommand extends Command {
 
@@ -21,13 +24,13 @@ public class SwerveDriveCommand extends Command {
 	 *                    translation/rotation gain. defaults to true. <br>
 	 *                    *note that dynamic gain is used everywhere else in the
 	 *                    code
+	 * 
 	 */
 	public SwerveDriveCommand(SwerveSubsystem subsystem, DoubleSupplier gyro, boolean dynamicGain) {
 		this.m_subsystem = subsystem;
 		requires(this.m_subsystem);
 
 		this.m_gyro = gyro;
-
 		this.m_dynamicGain = true;
 	}
 
@@ -45,9 +48,6 @@ public class SwerveDriveCommand extends Command {
 		double rotation = OI.rotation.getAsDouble();
 		String mode = "robot relative";
 
-		// if (Math.abs(x) < 0.075 && Math.abs(y) < 0.075 && Math.abs(rotation) < 0.075)
-		// return;
-
 		if (OI.absoluteDrive.getAsBoolean()) {
 			x = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
 			y = (x * Math.sin(Math.toRadians(angle))) + (y * Math.cos(Math.toRadians(angle)));
@@ -57,18 +57,10 @@ public class SwerveDriveCommand extends Command {
 		SmartDashboard.putString("Mode", mode);
 
 		if (m_dynamicGain) {
-			if (Math.abs(OI.rotation.getAsDouble()) < 0.1) {
-				m_subsystem.dynamicGainDrive(x, y, 0.0);
-				return;
-			}
-			m_subsystem.dynamicGainDrive(x, y, OI.rotation.getAsDouble());
+			m_subsystem.dynamicGainDrive(x, y, rotation);
 
 		} else {
-			if (Math.abs(OI.rotation.getAsDouble()) < 0.1) {
-				m_subsystem.staticGainDrive(x, y, 0.0);
-				return;
-			}
-			m_subsystem.staticGainDrive(x, y, OI.rotation.getAsDouble());
+			m_subsystem.staticGainDrive(x, y, rotation);
 		}
 
 	}

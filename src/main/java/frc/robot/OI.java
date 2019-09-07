@@ -74,25 +74,31 @@ public class OI {
   public static Joystick oppBoard = new Joystick(1);
 
   // DRIVER CONTROLS
-  public static DoubleSupplier transX = () -> xboxController.getRawAxis(LEFT_STICK_X);
-  public static DoubleSupplier transY = () -> -xboxController.getRawAxis(LEFT_STICK_Y);
-  public static DoubleSupplier rotation = () -> xboxController.getRawAxis(RIGHT_STICK_X);
+  public static DoubleSupplier transX = () -> deadZone(xboxController.getRawAxis(LEFT_STICK_X), 0.2);
+  public static DoubleSupplier transY = () -> deadZone(-xboxController.getRawAxis(LEFT_STICK_Y), 0.2);
+  public static DoubleSupplier rotation = () -> deadZone(xboxController.getRawAxis(RIGHT_STICK_X), 0.2);
   public static BooleanSupplier absoluteDrive = () -> xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
 
-  public static DoubleSupplier liftDrive = () -> -oppBoard.getRawAxis(1);
+  public static DoubleSupplier liftDrive = () -> deadZone(-oppBoard.getRawAxis(LEFT_STICK_Y), 0.2);
+  public static DoubleSupplier armDrive = () -> deadZone(-oppBoard.getRawAxis(RIGHT_STICK_Y), 0.2);
 
-  private static Button intakeIn = new JoystickButton(xboxController, BUTTON_B);
-  private static Button intakeOut = new JoystickButton(xboxController, BUTTON_X);
+  public static BooleanSupplier intakeIn = () -> xboxController.getRawButton(BUTTON_B);
+  public static BooleanSupplier intakeOut = () -> xboxController.getRawButton(BUTTON_X);
 
   private static Button resetGyro = new JoystickButton(xboxController, START_BUTTON);
 
   public OI() {
-    // intakeIn.whileHeld(new CargoIntakeCommand(SubsystemMap.cargoIntake, -1));
-    // intakeOut.whileHeld(new CargoIntakeCommand(SubsystemMap.cargoIntake, 1));
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
 
   }
 
+  private static double deadZone(double input, double absoluteTolerance) {
+    if (Math.abs(input) <= absoluteTolerance) {
+      return 0;
+    } else {
+      return input;
+    }
+  }
 }

@@ -9,6 +9,7 @@
 
 package frc.robot;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -57,7 +58,7 @@ public class RobotMap {
 	public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	// Lift
-	public static SpeedController lift = new Talon(9);
+	public static SpeedController lift = new Talon(8);
 	public static Encoder liftEncoder;
 	public static DigitalInput upperLiftLimit = new DigitalInput(0);
 	public static DigitalInput lowerLiftLimit = new DigitalInput(1);
@@ -73,7 +74,8 @@ public class RobotMap {
 	public static DigitalInput cargoLimitSwitch;
 
 	// Arms
-	public static SpeedController arm = new CANSparkMax(6, MotorType.kBrushless);
+	public static CANSparkMax arm = new CANSparkMax(6, MotorType.kBrushless);
+	public static CANEncoder armEncoder = arm.getEncoder();
 	// needs encoder
 
 	public RobotMap() {
@@ -81,6 +83,7 @@ public class RobotMap {
 		((CANSparkMax) leftFrontDrive).setSmartCurrentLimit(35, 60, 150);
 		((CANSparkMax) leftBackDrive).setSmartCurrentLimit(35, 60, 150);
 		((CANSparkMax) rightFrontDrive).setSmartCurrentLimit(35, 60, 150);
+		((CANSparkMax) arm).setSmartCurrentLimit(35, 60, 150);
 		leftBackDrive.setInverted(true);
 		leftFrontDrive.setInverted(true);
 

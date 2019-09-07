@@ -22,14 +22,14 @@ public class LiftSubsystem extends Subsystem {
 	 *              up, negative drives down. within the range of -1 to 1
 	 */
 	public void drive(double speed) {
-		if (!(this.m_upperLimit.get() && this.m_lowerLimit.get())) {
-			this.m_motor.set(speed);
-		}
+		// if (!(this.m_upperLimit.get() && this.m_lowerLimit.get())) {
+		this.m_motor.set(speed);
+		// }
 	}
 
 	@Override
 	public void initDefaultCommand() {
-		// setDefaultCommand(new LiftDriveCommand(this));
+		setDefaultCommand(new LiftDriveCommand(this));
 	}
 
 }

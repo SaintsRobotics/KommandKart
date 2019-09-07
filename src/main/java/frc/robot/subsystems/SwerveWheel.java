@@ -47,7 +47,7 @@ public class SwerveWheel {
 		this.m_pidController.reset();
 		this.m_pidController.enable();
 
-		this.m_rotationVector = new double[] { -radiusVector[1], radiusVector[0] }; // perpendicular to the radius line
+		this.m_rotationVector = new double[] { radiusVector[1], -radiusVector[0] }; // perpendicular to the radius line
 																					// (negative reciprocal)
 		this.m_radius = Math.sqrt(Math.pow(radiusVector[0], 2) + Math.pow(radiusVector[1], 2));
 	}

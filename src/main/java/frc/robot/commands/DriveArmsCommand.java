@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.subsystems.ArmsSubsystem;
-import frc.robot.subsystems.CargoIntakeSubsystem;
 
 /**
  * Drives cargo intake based on the value provided in the constructor. To be
@@ -33,12 +32,9 @@ public class DriveArmsCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(OI.transX.getAsDouble()) > 0.1) {
+		// m_subsystem.drive();
+		this.m_subsystem.setSpeed(OI.armDrive.getAsDouble() * 0.2);
 
-			this.m_subsystem.drive(OI.transX.getAsDouble() * GAIN);
-		} else {
-			m_subsystem.drive(0.02);
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

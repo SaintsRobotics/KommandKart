@@ -38,8 +38,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_robotMap = new RobotMap();
-		m_oi = new OI();
 		m_subsystemMap = new SubsystemMap();
+		m_oi = new OI();
 
 		RobotMap.gyro.calibrate();
 		RobotMap.gyro.reset();
@@ -59,20 +59,29 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation());
-		SmartDashboard.putNumber("left front ", RobotMap.leftFrontEncoder.getRotation());
-		SmartDashboard.putNumber("left back ", RobotMap.leftBackEncoder.getRotation());
-		SmartDashboard.putNumber("right back ", RobotMap.rightBackEncoder.getRotation());
+		// SmartDashboard.putNumber("right front ",
+		// RobotMap.rightFrontEncoder.getRotation());
+		// SmartDashboard.putNumber("left front ",
+		// RobotMap.leftFrontEncoder.getRotation());
+		// SmartDashboard.putNumber("left back ",
+		// RobotMap.leftBackEncoder.getRotation());
+		// SmartDashboard.putNumber("right back ",
+		// RobotMap.rightBackEncoder.getRotation());
 
-		SmartDashboard.putNumber("right front error ", RobotMap.rightFrontWheel.getPidController().getError());
-		SmartDashboard.putNumber("left front error ", RobotMap.leftFrontWheel.getPidController().getError());
-		SmartDashboard.putNumber("left back error ", RobotMap.leftBackWheel.getPidController().getError());
-		SmartDashboard.putNumber("right back error ", RobotMap.rightBackWheel.getPidController().getError());
+		// SmartDashboard.putNumber("right front error ",
+		// RobotMap.rightFrontWheel.getPidController().getError());
+		// SmartDashboard.putNumber("left front error ",
+		// RobotMap.leftFrontWheel.getPidController().getError());
+		// SmartDashboard.putNumber("left back error ",
+		// RobotMap.leftBackWheel.getPidController().getError());
+		// SmartDashboard.putNumber("right back error ",
+		// RobotMap.rightBackWheel.getPidController().getError());
 
-		SmartDashboard.putNumber("transX", OI.transX.getAsDouble());
-		SmartDashboard.putNumber("transY", OI.transY.getAsDouble());
-		SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
-		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
+		// SmartDashboard.putNumber("transX", OI.transX.getAsDouble());
+		// SmartDashboard.putNumber("transY", OI.transY.getAsDouble());
+		// SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
+		// SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 
 	}
 
@@ -144,7 +153,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		// if (OI.xboxController.getRawButton(OI.BUTTON_B)) {
+		// RobotMap.cargoIntake.set(1);
 
+		// } else if (OI.xboxController.getRawButton(OI.BUTTON_X)) {
+		// RobotMap.cargoIntake.set(-1);
+		// } else {
+		// RobotMap.cargoIntake.set(0);
+		// }
 	}
 
 	/**
