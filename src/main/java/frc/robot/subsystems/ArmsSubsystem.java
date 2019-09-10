@@ -22,7 +22,7 @@ public class ArmsSubsystem extends Subsystem {
 	private double m_PidArmOutput;
 
 	private double m_inputSpeed;
-	private boolean m_isMoving;
+	private boolean m_isMoving = false;
 
 	public ArmsSubsystem(CANSparkMax motor, CANEncoderPidSource encoder, PidConfig pidArmConfig) {
 		this.m_motor = motor;
@@ -50,11 +50,8 @@ public class ArmsSubsystem extends Subsystem {
 			this.m_pidArmController.setSetpoint(this.m_encoder.pidGet());
 			this.m_isMoving = false;
 		}
-		this.m_motor.set(output);
-	}
 
-	public void runPid() {
-		this.m_motor.set(this.m_PidArmOutput);
+		this.m_motor.set(output);
 	}
 
 	public void setPidSetpoint(double setpoint) {

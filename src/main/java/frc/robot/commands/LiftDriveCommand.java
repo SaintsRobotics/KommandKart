@@ -27,7 +27,7 @@ public class LiftDriveCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		this.m_subsystem.drive(OI.liftDrive.getAsDouble() * SCALE);
+		this.m_subsystem.setSpeed(OI.liftDrive.getAsDouble() * SCALE);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -39,7 +39,7 @@ public class LiftDriveCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		this.m_subsystem.drive(0);
+		this.m_subsystem.setSpeed(0);
 	}
 
 	// Called when another command which requires one or more of the same

@@ -7,7 +7,8 @@ import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.util.PidConfig;
 
 /**
- * Calculates the amount the lift must move in order to be at a certain height.  Instantiate once for every height.
+ * Calculates the amount the lift must move in order to be at a certain height.
+ * Instantiate once for every height.
  */
 public class ToHeightCommand extends Command {
 	private final double SCALE = 1;
@@ -16,13 +17,14 @@ public class ToHeightCommand extends Command {
 	private double m_targetHeight;
 	private PIDController m_pidController;
 	private double m_pidOutput;
-	
+
 	public ToHeightCommand(LiftSubsystem subsystem, PIDSource encoder, double targetHeight, PidConfig pidConfig) {
 		this.m_subsystem = subsystem;
 		requires(this.m_subsystem);
 		this.m_targetHeight = targetHeight;
 
-		this.m_pidController = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, encoder, (output) -> this.m_pidOutput = output * this.SCALE);
+		this.m_pidController = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, encoder,
+				(output) -> this.m_pidOutput = output * this.SCALE);
 		this.m_pidController.setAbsoluteTolerance(pidConfig.tolerance);
 		this.m_pidController.setContinuous(false);
 		this.m_pidController.setOutputRange(-1, 1);
@@ -40,7 +42,7 @@ public class ToHeightCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		this.m_subsystem.drive(this.m_pidOutput);
+		this.m_subsystem.setSpeed(this.m_pidOutput);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
