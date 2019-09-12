@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.subsystems.ArmsSubsystem;
 
@@ -33,9 +34,14 @@ public class DriveArmsCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		// m_subsystem.drive();
-		this.m_subsystem.setSpeed(OI.armDrive.getAsDouble() * 0.2);
-
+		double x = 0; // bad name for variable tbh
+		if (OI.armDrive.getAsDouble() >= 0) {
+			x = OI.armDrive.getAsDouble() * 0.2;
+		} else {
+			x = OI.armDrive.getAsDouble() * 0.1;
+		}
+		this.m_subsystem.setSpeed(x);
+		SmartDashboard.putNumber("arm controller input", x);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
