@@ -46,7 +46,7 @@ public class LiftSubsystem extends Subsystem {
 			this.m_isMoving = false;
 		}
 
-		if (this.m_lowerLimit.get() == false) {
+		if (this.m_lowerLimit.get() == false && this.m_inputSpeed < 0.0) {
 			this.m_motor.set(0);
 			this.m_encoder.reset();
 		} else {
