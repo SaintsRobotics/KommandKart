@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -54,10 +55,6 @@ public class ArmsSubsystem extends Subsystem {
 		this.m_motor.set(output);
 	}
 
-	public void setPidSetpoint(double setpoint) {
-
-	}
-
 	public void setSpeed(double speed) {
 		this.m_inputSpeed = speed;
 	}
@@ -69,6 +66,14 @@ public class ArmsSubsystem extends Subsystem {
 	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveArmsCommand(this));
+
+	}
+
+	/**
+	 * Resets the PId Setpoint to its current location
+	 */
+	public void resetPIDSetpoint() {
+		this.m_pidArmController.setSetpoint(this.m_encoder.pidGet());
 
 	}
 
