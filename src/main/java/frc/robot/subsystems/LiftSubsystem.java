@@ -1,31 +1,30 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.LiftDriveCommand;
 import frc.robot.util.PidConfig;
 
 public class LiftSubsystem extends Subsystem {
 
 	private SpeedController m_motor;
-	private DigitalInput m_upperLimit;
+	private Encoder m_encoder;
 	private DigitalInput m_lowerLimit;
 
-	private PIDSource m_encoder;
 	private PIDController m_pidControler;
 	private double m_pidOutput;
 	private boolean m_isMoving = false;
 	private double m_inputSpeed;
 
-	public LiftSubsystem(SpeedController motor, PIDSource encoder, DigitalInput upperLimit, DigitalInput lowerLimit,
-			PidConfig pidConfig) {
-		this.m_motor = motor;
-		this.m_upperLimit = upperLimit;
-		this.m_lowerLimit = lowerLimit;
+	public LiftSubsystem(SpeedController motor, Encoder encoder, DigitalInput lowerLimit, PidConfig pidConfig) {
 
+		this.m_motor = motor;
+		this.m_lowerLimit = lowerLimit;
 		this.m_encoder = encoder;
 
 		this.m_pidControler = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, encoder,
@@ -36,6 +35,7 @@ public class LiftSubsystem extends Subsystem {
 	}
 
 	public void periodic() {
+		SmartDashboard.putData("limit switch", this.m_lowerLimit);
 		double output = this.m_pidOutput;
 		if (this.m_inputSpeed != 0) {
 			this.m_isMoving = true;
@@ -46,7 +46,12 @@ public class LiftSubsystem extends Subsystem {
 			this.m_isMoving = false;
 		}
 
-		this.m_motor.set(output);
+		if (this.m_lowerLimit.get() == false) {
+			this.m_motor.set(0);
+			this.m_encoder.reset();
+		} else {
+			this.m_motor.set(output);
+		}
 	}
 
 	/**
