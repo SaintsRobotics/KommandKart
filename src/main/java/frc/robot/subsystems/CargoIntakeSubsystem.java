@@ -10,11 +10,9 @@ import frc.robot.commands.CargoIntakeCommand;
 public class CargoIntakeSubsystem extends Subsystem {
 
 	private SpeedController m_motor;
-	private DigitalInput m_limitSwitch;
 
-	public CargoIntakeSubsystem(SpeedController motor, DigitalInput limitSwitch) {
+	public CargoIntakeSubsystem(SpeedController motor) {
 		this.m_motor = motor;
-		this.m_limitSwitch = limitSwitch;
 	}
 
 	/**
@@ -22,10 +20,7 @@ public class CargoIntakeSubsystem extends Subsystem {
 	 *              intakes, negative outtakes. within the range of -1 to 1
 	 */
 	public void drive(double speed) {
-		// if (!this.m_limitSwitch.get()) {
-		SmartDashboard.putNumber("Intake motor speed", speed);
 		this.m_motor.set(speed);
-		// }
 	}
 
 	@Override

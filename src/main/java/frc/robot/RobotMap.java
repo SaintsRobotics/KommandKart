@@ -59,8 +59,7 @@ public class RobotMap {
 
 	// Lift
 	public static SpeedController lift = new Talon(8);
-	public static Encoder liftEncoder;
-	public static DigitalInput upperLiftLimit = new DigitalInput(0);
+	public static Encoder liftEncoder = new Encoder(2, 3);
 	public static DigitalInput lowerLiftLimit = new DigitalInput(1);
 
 	// Cargo Lift

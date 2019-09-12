@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Configs.PidConfigs;
 import frc.robot.subsystems.ArmsSubsystem;
 import frc.robot.subsystems.CargoIntakeSubsystem;
@@ -30,12 +31,10 @@ public class SubsystemMap {
 				new double[] { 0, 0 }, () -> ((RobotMap.gyro.getAngle() % 360) + 360) % 360,
 				PidConfigs.robotHeading.value);
 
-		arms = new ArmsSubsystem(RobotMap.arm, new CANEncoderPidSource(RobotMap.armEncoder),
-				new PidConfig(0.1, 0, 0, 0.0));
-		cargoIntake = new CargoIntakeSubsystem(RobotMap.cargoIntake, new DigitalInput(3));
+		arms = new ArmsSubsystem(RobotMap.arm, new CANEncoderPidSource(RobotMap.armEncoder), PidConfigs.arm.value);
+		cargoIntake = new CargoIntakeSubsystem(RobotMap.cargoIntake);
 
-		// lift = new LiftSubsystem(RobotMap.lift, RobotMap.upperLiftLimit,
-		// RobotMap.lowerLiftLimit);
+		lift = new LiftSubsystem(RobotMap.lift, RobotMap.liftEncoder, RobotMap.lowerLiftLimit, PidConfigs.lift.value);
 
 	}
 }

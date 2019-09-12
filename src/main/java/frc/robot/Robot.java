@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
 		// SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
 		// SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
+		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
 
 	}
 
@@ -153,14 +154,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		// if (OI.xboxController.getRawButton(OI.BUTTON_B)) {
-		// RobotMap.cargoIntake.set(1);
-
-		// } else if (OI.xboxController.getRawButton(OI.BUTTON_X)) {
-		// RobotMap.cargoIntake.set(-1);
-		// } else {
-		// RobotMap.cargoIntake.set(0);
-		// }
 	}
 
 	/**
