@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -24,6 +25,7 @@ public class ResetGyroCommand extends Command {
 	@Override
 	protected void execute() {
 		this.m_gyro.reset();
+		DriverStation.reportWarning("gyro reset!", false);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

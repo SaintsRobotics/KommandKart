@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Robot;
+import frc.robot.Configs.PidConfigs;
 import frc.robot.commands.CargoIntakeCommand;
 import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.ToHeightCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -83,14 +85,18 @@ public class OI {
   public static DoubleSupplier liftDrive = () -> deadZone(-oppBoard.getRawAxis(LEFT_STICK_Y), 0.2);
   public static DoubleSupplier armDrive = () -> deadZone(-oppBoard.getRawAxis(RIGHT_STICK_Y), 0.2);
 
-  public static BooleanSupplier intakeIn = () -> xboxController.getRawButton(BUTTON_B);
-  public static BooleanSupplier intakeOut = () -> xboxController.getRawButton(BUTTON_X);
+  public static BooleanSupplier intakeIn = () -> oppBoard.getRawButton(LEFT_BUMBER);
+  public static BooleanSupplier intakeOut = () -> oppBoard.getRawButton(RIGHT_BUMPER);
 
   private static Button resetGyro = new JoystickButton(xboxController, START_BUTTON);
+  private static Button upperScore = new JoystickButton(oppBoard, BUTTON_Y);
+  private static Button lowerScore = new JoystickButton(oppBoard, BUTTON_A);
 
   public OI() {
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
+    upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6800, PidConfigs.lift.value));
+    lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
 
   }
 

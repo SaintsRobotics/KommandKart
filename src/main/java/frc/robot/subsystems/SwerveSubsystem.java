@@ -57,6 +57,10 @@ public class SwerveSubsystem extends Subsystem {
 		setDefaultCommand(new SwerveDriveCommand(this, this.m_gyro, true));
 	}
 
+	public PIDController getPidController() {
+		return this.m_pidController;
+	}
+
 	/**
 	 * The translation and rotation speeds, shift according to how much speed is
 	 * input.
@@ -80,22 +84,16 @@ public class SwerveSubsystem extends Subsystem {
 			rotation = this.m_pidOutput;
 		}
 
-		// SmartDashboard.putNumber("swerve setpoint ",
-		// this.m_pidController.getSetpoint());
-
 		// Doing math with each of the vectors for the SwerveWheels
 		// Calculating the rotation vector, then adding that to the translation vector
 		// Converting them to polar vectors
-		// SmartDashboard.putNumber("input rotation", rotation);
 		double[][] vectors = new double[m_wheels.length][2];
 		for (int i = 0; i < m_wheels.length; i++) {
 			vectors[i][0] = m_wheels[i].getRotationVector()[0] * (1 / this.m_maxWheelDistance)
 					* (rotation * STATIC_ROT_COEF) + (transX * STATIC_TRANS_COEF);
-			// SmartDashboard.putNumber("wheel [" + i + "][0] ", vectors[i][0]);
 			vectors[i][1] = m_wheels[i].getRotationVector()[1] * (1 / this.m_maxWheelDistance)
 					* (rotation * STATIC_ROT_COEF) + (transY * STATIC_TRANS_COEF);
 			vectors[i] = AngleUtilities.cartesianToPolar(vectors[i]);
-			// SmartDashboard.putNumber("wheel [" + i + "][1] ", vectors[i][1]);
 
 		}
 

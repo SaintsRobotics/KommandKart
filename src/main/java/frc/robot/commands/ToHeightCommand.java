@@ -3,6 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.subsystems.LiftSubsystem;
 import frc.robot.util.PidConfig;
 
@@ -27,7 +29,8 @@ public class ToHeightCommand extends Command {
 				(output) -> this.m_pidOutput = output * this.SCALE);
 		this.m_pidController.setAbsoluteTolerance(pidConfig.tolerance);
 		this.m_pidController.setContinuous(false);
-		this.m_pidController.setOutputRange(-1, 1);
+		this.m_pidController.setOutputRange(-.5, .5);
+		this.m_pidController.setInputRange(0, 7000);
 		this.m_pidController.reset();
 
 	}
@@ -43,12 +46,13 @@ public class ToHeightCommand extends Command {
 	@Override
 	protected void execute() {
 		this.m_subsystem.setSpeed(this.m_pidOutput);
+		SmartDashboard.putNumber("pid error ", this.m_pidController.getError());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return this.m_pidController.onTarget();
+		return OI.liftDrive.getAsDouble() != 0 || this.m_pidController.onTarget();
 	}
 
 	// Called once after isFinished returns true

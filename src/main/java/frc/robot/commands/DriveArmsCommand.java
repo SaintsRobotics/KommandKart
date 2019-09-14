@@ -41,7 +41,6 @@ public class DriveArmsCommand extends Command {
 			x = OI.armDrive.getAsDouble() * 0.1;
 		}
 		this.m_subsystem.setSpeed(x);
-		SmartDashboard.putNumber("arm controller input", x);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
