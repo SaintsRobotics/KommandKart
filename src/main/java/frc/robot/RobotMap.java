@@ -62,20 +62,13 @@ public class RobotMap {
 	public static Encoder liftEncoder = new Encoder(2, 3);
 	public static DigitalInput lowerLiftLimit = new DigitalInput(1);
 
-	// Cargo Lift
-	public static SpeedController cargoLift;
-	public static Encoder cargoLiftEncoder;
-	public static DigitalInput cargoUpperLiftLimit;
-	public static DigitalInput cargoLowerLiftLimit;
-
-	// // Cargo Intake
+	// Cargo Intake
 	public static SpeedController cargoIntake = new Talon(10);
 	public static DigitalInput cargoLimitSwitch;
 
-	// Arms
+	// Arm
 	public static CANSparkMax arm = new CANSparkMax(6, MotorType.kBrushless);
 	public static CANEncoder armEncoder = arm.getEncoder();
-	// needs encoder
 
 	public RobotMap() {
 		((CANSparkMax) rightFrontDrive).setSmartCurrentLimit(35, 60, 150);
