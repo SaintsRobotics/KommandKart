@@ -29,7 +29,7 @@ public class ToHeightCommand extends Command {
 				(output) -> this.m_pidOutput = output * this.SCALE);
 		this.m_pidController.setAbsoluteTolerance(pidConfig.tolerance);
 		this.m_pidController.setContinuous(false);
-		this.m_pidController.setOutputRange(-.5, .5);
+		this.m_pidController.setOutputRange(-.7, .7);
 		this.m_pidController.setInputRange(0, 7000);
 		this.m_pidController.reset();
 

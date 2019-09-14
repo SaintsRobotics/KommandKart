@@ -10,7 +10,7 @@ import frc.robot.subsystems.LiftSubsystem;
  */
 public class LiftDriveCommand extends Command {
 
-	private final double SCALE = 0.5; // value between 0 and 1 by which input to the lift is scaled
+	private final double SCALE = 0.7; // value between 0 and 1 by which input to the lift is scaled
 
 	private LiftSubsystem m_subsystem;
 
