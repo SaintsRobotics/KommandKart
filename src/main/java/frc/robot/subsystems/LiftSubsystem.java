@@ -43,9 +43,11 @@ public class LiftSubsystem extends Subsystem {
 		}
 
 		if (this.m_lowerLimit.get() == false && output <= 0) {
-			this.m_motor.set(0);
+			if (output < 0) {
+				this.m_motor.set(0);
+			}
 			this.m_encoder.reset();
-			DriverStation.reportWarning("lift encoder reset!", false);
+			this.m_pidControler.setSetpoint(0);
 		} else {
 			this.m_motor.set(output);
 		}
