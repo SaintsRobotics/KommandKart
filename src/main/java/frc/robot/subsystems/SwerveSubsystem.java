@@ -79,7 +79,6 @@ public class SwerveSubsystem extends Subsystem {
 			this.m_pidController.setSetpoint((((RobotMap.gyro.getAngle() % 360) + 360) % 360));
 			this.m_isTurning = false;
 			rotation = this.m_pidOutput;
-			System.out.println("inside here " + num++);
 		} else if (transX != 0.0 || transY != 0) {
 			rotation = this.m_pidOutput;
 		}

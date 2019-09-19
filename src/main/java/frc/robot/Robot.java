@@ -78,14 +78,18 @@ public class Robot extends TimedRobot {
 		// // RobotMap.leftBackWheel.getPidController().getError());
 		// // SmartDashboard.putNumber("right back error ",
 		// // RobotMap.rightBackWheel.getPidController().getError());
-
-		// // SmartDashboard.putNumber("transX", OI.transX.getAsDouble());
-		// // SmartDashboard.putNumber("transY", OI.transY.getAsDouble());
-		// // SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
+		SmartDashboard.putNumber("right front encoder", RobotMap.rightFrontEncoder.getRotation());
+		SmartDashboard.putNumber("left front encoder", RobotMap.leftFrontEncoder.getRotation());
+		SmartDashboard.putNumber("left back encoder", RobotMap.leftBackEncoder.getRotation());
+		SmartDashboard.putNumber("right back encoder", RobotMap.rightBackEncoder.getRotation());
+		SmartDashboard.putNumber("transX", OI.transX.getAsDouble());
+		SmartDashboard.putNumber("transY", OI.transY.getAsDouble());
+		SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
+		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
-		SmartDashboard.putBoolean("lift limit switch is on ", !RobotMap.lowerLiftLimit.get());
+		SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
 		SmartDashboard.putNumber("lit maintaining pid error", SubsystemMap.lift.getPidController().getError());
 
 	}
