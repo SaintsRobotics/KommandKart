@@ -76,9 +76,9 @@ public class OI {
   public static Joystick oppBoard = new Joystick(1);
 
   // DRIVER CONTROLS
-  public static DoubleSupplier transX = () -> deadZone(xboxController.getRawAxis(LEFT_STICK_X), 0.2);
-  public static DoubleSupplier transY = () -> deadZone(-xboxController.getRawAxis(LEFT_STICK_Y), 0.2);
-  public static DoubleSupplier rotation = () -> deadZone(xboxController.getRawAxis(RIGHT_STICK_X), 0.2);
+  public static DoubleSupplier transX = () -> oddSquare(deadZone(xboxController.getRawAxis(LEFT_STICK_X), 0.05));
+  public static DoubleSupplier transY = () -> oddSquare(deadZone(-xboxController.getRawAxis(LEFT_STICK_Y), 0.05));
+  public static DoubleSupplier rotation = () -> deadZone(xboxController.getRawAxis(RIGHT_STICK_X), 0.2) * .5;
   public static BooleanSupplier absoluteDrive = () -> xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
 
@@ -95,7 +95,7 @@ public class OI {
   public OI() {
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
-    upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6800, PidConfigs.lift.value));
+    upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6500, PidConfigs.lift.value));
     lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
 
   }
@@ -106,5 +106,9 @@ public class OI {
     } else {
       return input;
     }
+  }
+
+  private static double oddSquare(double input) {
+    return input * Math.abs(input);
   }
 }

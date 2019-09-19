@@ -12,8 +12,8 @@ import frc.robot.util.PidConfig;
 
 public class SwerveSubsystem extends Subsystem {
 	private static double DYNAMIC_SPEED_COEF = 1;
-	private static double STATIC_TRANS_COEF = .3;
-	private static double STATIC_ROT_COEF = .2;
+	private static double STATIC_TRANS_COEF = .6;
+	private static double STATIC_ROT_COEF = .4;
 
 	private DoubleSupplier m_gyro;
 	private SwerveWheel[] m_wheels;
@@ -89,10 +89,8 @@ public class SwerveSubsystem extends Subsystem {
 		// Converting them to polar vectors
 		double[][] vectors = new double[m_wheels.length][2];
 		for (int i = 0; i < m_wheels.length; i++) {
-			vectors[i][0] = m_wheels[i].getRotationVector()[0] * (1 / this.m_maxWheelDistance)
-					* (rotation * STATIC_ROT_COEF) + (transX * STATIC_TRANS_COEF);
-			vectors[i][1] = m_wheels[i].getRotationVector()[1] * (1 / this.m_maxWheelDistance)
-					* (rotation * STATIC_ROT_COEF) + (transY * STATIC_TRANS_COEF);
+			vectors[i][0] = m_wheels[i].getRotationVector()[0] * (1 / this.m_maxWheelDistance) * rotation + transX;
+			vectors[i][1] = m_wheels[i].getRotationVector()[1] * (1 / this.m_maxWheelDistance) * rotation + transY;
 			vectors[i] = AngleUtilities.cartesianToPolar(vectors[i]);
 
 		}
