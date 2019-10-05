@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -42,12 +41,14 @@ public class LiftSubsystem extends Subsystem {
 			this.m_isMoving = false;
 		}
 
-		if (this.m_lowerLimit.get() == false && output <= 0) {
-			if (output < 0) {
-				this.m_motor.set(0);
-			}
+		if (this.m_lowerLimit.get() == false) {
 			this.m_encoder.reset();
 			this.m_pidControler.setSetpoint(0);
+			if (output < 0) {
+				this.m_motor.set(0);
+			} else {
+				this.m_motor.set(output);
+			}
 		} else {
 			this.m_motor.set(output);
 		}
