@@ -61,14 +61,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
-		// // SmartDashboard.putNumber("right front ",
-		// // RobotMap.rightFrontEncoder.getRotation());
-		// // SmartDashboard.putNumber("left front ",
-		// // RobotMap.leftFrontEncoder.getRotation());
-		// // SmartDashboard.putNumber("left back ",
-		// // RobotMap.leftBackEncoder.getRotation());
-		// // SmartDashboard.putNumber("right back ",
-		// // RobotMap.rightBackEncoder.getRotation());
+		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation());
+		SmartDashboard.putNumber("left front ", RobotMap.leftFrontEncoder.getRotation());
+		SmartDashboard.putNumber("left back ", RobotMap.leftBackEncoder.getRotation());
+		SmartDashboard.putNumber("right back ", RobotMap.rightBackEncoder.getRotation());
 
 		// // SmartDashboard.putNumber("right front error ",
 		// // RobotMap.rightFrontWheel.getPidController().getError());
@@ -78,18 +74,23 @@ public class Robot extends TimedRobot {
 		// // RobotMap.leftBackWheel.getPidController().getError());
 		// // SmartDashboard.putNumber("right back error ",
 		// // RobotMap.rightBackWheel.getPidController().getError());
-		SmartDashboard.putNumber("right front encoder", RobotMap.rightFrontEncoder.getRotation());
-		SmartDashboard.putNumber("left front encoder", RobotMap.leftFrontEncoder.getRotation());
-		SmartDashboard.putNumber("left back encoder", RobotMap.leftBackEncoder.getRotation());
-		SmartDashboard.putNumber("right back encoder", RobotMap.rightBackEncoder.getRotation());
-		SmartDashboard.putNumber("transX", OI.transX.getAsDouble());
-		SmartDashboard.putNumber("transY", OI.transY.getAsDouble());
-		SmartDashboard.putNumber("rotation", OI.rotation.getAsDouble());
+		// SmartDashboard.putNumber("right front encoder",
+		// RobotMap.rightFrontEncoder.getRotation());
+		// SmartDashboard.putNumber("left front encoder",
+		// RobotMap.leftFrontEncoder.getRotation());
+		// SmartDashboard.putNumber("left back encoder",
+		// RobotMap.leftBackEncoder.getRotation());
+		// SmartDashboard.putNumber("right back encoder",
+		// RobotMap.rightBackEncoder.getRotation());
+		SmartDashboard.putNumber("transX input", OI.transX.getAsDouble());
+		SmartDashboard.putNumber("transY input", OI.transY.getAsDouble());
+		SmartDashboard.putNumber("rotation input", OI.rotation.getAsDouble());
 		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
-		SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
+		SmartDashboard.putBoolean("lift limit switch is on", RobotMap.lowerLiftLimit.get());
+		SmartDashboard.putNumber("lift input", OI.liftDrive.getAsDouble());
 		SmartDashboard.putNumber("lit maintaining pid error", SubsystemMap.lift.getPidController().getError());
 
 	}

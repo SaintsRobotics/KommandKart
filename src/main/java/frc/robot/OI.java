@@ -52,9 +52,10 @@ public class OI {
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
 
-  // CONSTANT VALUES
   // use the getRawAxis(int) and getRawButton(int) methods inherited from
   // GeneralHID
+  // CONSTANT VALUES
+  private static double DRIVE_SPEED_MULTIPLIER = .25;
   public static int LEFT_STICK_X = 0;
   public static int LEFT_STICK_Y = 1;
   public static int RIGHT_STICK_X = 4;
@@ -76,8 +77,10 @@ public class OI {
   public static Joystick oppBoard = new Joystick(1);
 
   // DRIVER CONTROLS
-  public static DoubleSupplier transX = () -> oddSquare(deadZone(xboxController.getRawAxis(LEFT_STICK_X), 0.05));
-  public static DoubleSupplier transY = () -> oddSquare(deadZone(-xboxController.getRawAxis(LEFT_STICK_Y), 0.05));
+  public static DoubleSupplier transX = () -> DRIVE_SPEED_MULTIPLIER
+      * oddSquare(deadZone(xboxController.getRawAxis(LEFT_STICK_X), 0.05));
+  public static DoubleSupplier transY = () -> DRIVE_SPEED_MULTIPLIER
+      * oddSquare(deadZone(-xboxController.getRawAxis(LEFT_STICK_Y), 0.05));
   public static DoubleSupplier rotation = () -> deadZone(xboxController.getRawAxis(RIGHT_STICK_X), 0.2) * .5;
   public static BooleanSupplier absoluteDrive = () -> xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
@@ -95,6 +98,7 @@ public class OI {
   public OI() {
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
+
     upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6500, PidConfigs.lift.value));
     lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
 

@@ -82,6 +82,7 @@ public class RobotMap {
 		leftFrontTurn.setInverted(true);
 		leftBackTurn.setInverted(true);
 		rightBackTurn.setInverted(true);
+		rightFrontTurn.setInverted(true);
 
 	}
 
