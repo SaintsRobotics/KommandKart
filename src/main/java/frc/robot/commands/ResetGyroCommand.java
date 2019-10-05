@@ -3,6 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.SwerveSubsystem;
 
 /**
  * Calculates the amount the robot must rotate and simulates that as joystick
@@ -14,6 +16,7 @@ public class ResetGyroCommand extends Command {
 
 	public ResetGyroCommand(ADXRS450_Gyro gyro) {
 		this.m_gyro = gyro;
+
 	}
 
 	// Called just before this Command runs the first time
@@ -24,7 +27,9 @@ public class ResetGyroCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+
 		this.m_gyro.reset();
+		Robot.m_subsystemMap.swerveSubsystem.resetPID();
 		DriverStation.reportWarning("gyro reset!", false);
 	}
 

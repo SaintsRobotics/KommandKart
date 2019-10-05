@@ -71,6 +71,10 @@ public class SwerveSubsystem extends Subsystem {
 	 */
 	private int num = 0;
 
+	public void resetPID() {
+		this.m_pidController.setSetpoint(0);
+	}
+
 	public void dynamicGainDrive(double transX, double transY, double rotation) {
 
 		if (rotation != 0.0) {
