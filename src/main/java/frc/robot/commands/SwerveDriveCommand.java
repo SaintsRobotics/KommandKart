@@ -45,12 +45,13 @@ public class SwerveDriveCommand extends Command {
 		double angle = this.m_gyro.getAsDouble();
 		double x = OI.transX.getAsDouble();
 		double y = OI.transY.getAsDouble();
+		double tempX = 0;
 		double rotation = OI.rotation.getAsDouble();
 		String mode = "robot relative";
-
 		if (OI.absoluteDrive.getAsBoolean()) {
-			x = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
+			tempX = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
 			y = (x * Math.sin(Math.toRadians(angle))) + (y * Math.cos(Math.toRadians(angle)));
+			x = tempX;
 			mode = "field relative";
 		}
 
