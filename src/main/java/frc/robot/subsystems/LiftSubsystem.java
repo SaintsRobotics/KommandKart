@@ -40,6 +40,16 @@ public class LiftSubsystem extends Subsystem {
 			this.m_pidControler.setSetpoint(this.m_encoder.pidGet());
 			this.m_isMoving = false;
 		}
+		if (this.m_encoder.get() > 5500) {
+			if (output > 0) {
+				output = Math.abs(output) * output;
+			}
+		}
+		if (this.m_encoder.get() < 1500) {
+			if (output < 0) {
+				output = Math.abs(output) * output;
+			}
+		}
 
 		if (this.m_lowerLimit.get() == false) {
 			this.m_encoder.reset();

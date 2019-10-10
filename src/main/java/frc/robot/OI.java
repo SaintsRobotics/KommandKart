@@ -55,7 +55,7 @@ public class OI {
   // use the getRawAxis(int) and getRawButton(int) methods inherited from
   // GeneralHID
   // CONSTANT VALUES
-  private static double DRIVE_SPEED_MULTIPLIER = .25;
+  private static double DRIVE_SPEED_MULTIPLIER = .4;
   public static int LEFT_STICK_X = 0;
   public static int LEFT_STICK_Y = 1;
   public static int RIGHT_STICK_X = 4;
@@ -94,11 +94,12 @@ public class OI {
   private static Button resetGyro = new JoystickButton(xboxController, START_BUTTON);
   private static Button upperScore = new JoystickButton(oppBoard, BUTTON_Y);
   private static Button lowerScore = new JoystickButton(oppBoard, BUTTON_A);
+  private static Button cargoScore = new JoystickButton(oppBoard, BUTTON_X);
 
   public OI() {
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
-
+    cargoScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 2750, PidConfigs.lift.value));
     upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6500, PidConfigs.lift.value));
     lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
 
@@ -115,4 +116,5 @@ public class OI {
   private static double oddSquare(double input) {
     return input * Math.abs(input);
   }
+
 }
