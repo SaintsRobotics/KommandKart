@@ -19,6 +19,7 @@ public class LiftSubsystem extends Subsystem {
 	private PIDController m_pidControler;
 	private double m_pidOutput;
 	private boolean m_isMoving = false;
+	private double SAFETYZONE_THROTTLE = 0.3;
 	private double m_inputSpeed;
 
 	public LiftSubsystem(SpeedController motor, Encoder encoder, DigitalInput lowerLimit, DigitalInput upperLimit,
@@ -46,12 +47,12 @@ public class LiftSubsystem extends Subsystem {
 		}
 		if (this.m_encoder.get() > 5500) {
 			if (output > 0) {
-				output = Math.abs(output) * output;
+				output = SAFETYZONE_THROTTLE * output;
 			}
 		}
 		if (this.m_encoder.get() < 1500) {
 			if (output < 0) {
-				output = Math.abs(output) * output;
+				output = SAFETYZONE_THROTTLE * output;
 			}
 		}
 
