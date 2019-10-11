@@ -34,7 +34,8 @@ public class SubsystemMap {
 		arms = new ArmsSubsystem(RobotMap.arm, new CANEncoderPidSource(RobotMap.armEncoder), PidConfigs.arm.value);
 		cargoIntake = new CargoIntakeSubsystem(RobotMap.cargoIntake);
 
-		lift = new LiftSubsystem(RobotMap.lift, RobotMap.liftEncoder, RobotMap.lowerLiftLimit, PidConfigs.lift.value);
+		lift = new LiftSubsystem(RobotMap.lift, RobotMap.liftEncoder, RobotMap.lowerLiftLimit, RobotMap.upperLiftLimit,
+				PidConfigs.lift.value);
 
 	}
 }

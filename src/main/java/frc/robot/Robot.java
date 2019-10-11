@@ -85,11 +85,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("transX input", OI.transX.getAsDouble());
 		SmartDashboard.putNumber("transY input", OI.transY.getAsDouble());
 		SmartDashboard.putNumber("rotation input", OI.rotation.getAsDouble());
-		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
+		SmartDashboard.putNumber("heading pid error", SubsystemMap.swerveSubsystem.getPidController().getError());
+		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
-		SmartDashboard.putBoolean("lift limit switch is on", RobotMap.lowerLiftLimit.get());
+		SmartDashboard.putBoolean("upper lift limit switch", RobotMap.upperLiftLimit.get());
 		SmartDashboard.putNumber("lift input", OI.liftDrive.getAsDouble());
 		SmartDashboard.putNumber("lit maintaining pid error", SubsystemMap.lift.getPidController().getError());
 

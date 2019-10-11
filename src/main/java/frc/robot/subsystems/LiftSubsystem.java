@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.LiftDriveCommand;
 import frc.robot.util.PidConfig;
 
@@ -13,16 +14,19 @@ public class LiftSubsystem extends Subsystem {
 	private SpeedController m_motor;
 	private Encoder m_encoder;
 	private DigitalInput m_lowerLimit;
+	private DigitalInput m_upperLimit;
 
 	private PIDController m_pidControler;
 	private double m_pidOutput;
 	private boolean m_isMoving = false;
 	private double m_inputSpeed;
 
-	public LiftSubsystem(SpeedController motor, Encoder encoder, DigitalInput lowerLimit, PidConfig pidConfig) {
+	public LiftSubsystem(SpeedController motor, Encoder encoder, DigitalInput lowerLimit, DigitalInput upperLimit,
+			PidConfig pidConfig) {
 
 		this.m_motor = motor;
 		this.m_lowerLimit = lowerLimit;
+		this.m_upperLimit = upperLimit;
 		this.m_encoder = encoder;
 
 		this.m_pidControler = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, encoder,
@@ -55,13 +59,19 @@ public class LiftSubsystem extends Subsystem {
 			this.m_encoder.reset();
 			this.m_pidControler.setSetpoint(0);
 			if (output < 0) {
-				this.m_motor.set(0);
-			} else {
-				this.m_motor.set(output);
+				output = 0;
 			}
-		} else {
-			this.m_motor.set(output);
 		}
+
+		// TODO test implimentation of upper limit
+		if (this.m_upperLimit.get() == false) {
+			if (output > 0) {
+				output = 0;
+			}
+		}
+
+		this.m_motor.set(output);
+
 	}
 
 	/**
