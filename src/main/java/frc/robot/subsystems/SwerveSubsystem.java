@@ -12,7 +12,7 @@ import frc.robot.util.PidConfig;
 
 public class SwerveSubsystem extends Subsystem {
 	private static double DYNAMIC_SPEED_COEF = 1;
-	private static double STATIC_TRANS_COEF = .6;
+	private static double STATIC_TRANS_COEF = 1;
 	private static double STATIC_ROT_COEF = .4;
 
 	private DoubleSupplier m_gyro;
@@ -61,6 +61,10 @@ public class SwerveSubsystem extends Subsystem {
 		return this.m_pidController;
 	}
 
+	public void resetPID() {
+		this.m_pidController.setSetpoint(0);
+	}
+
 	/**
 	 * The translation and rotation speeds, shift according to how much speed is
 	 * input.
@@ -69,12 +73,6 @@ public class SwerveSubsystem extends Subsystem {
 	 * @param transY   movement in the forward and backward direction
 	 * @param rotation the speed at which the robot is to rotate
 	 */
-	private int num = 0;
-
-	public void resetPID() {
-		this.m_pidController.setSetpoint(0);
-	}
-
 	public void dynamicGainDrive(double transX, double transY, double rotation) {
 
 		if (rotation != 0.0) {
@@ -122,8 +120,8 @@ public class SwerveSubsystem extends Subsystem {
 	}
 
 	/**
-	 * There is a maximum speed at which the robot will rotate, and maximum speed at
-	 * which the robot will translate.
+	 * DEPRECATED There is a maximum speed at which the robot will rotate, and
+	 * maximum speed at which the robot will translate.
 	 * 
 	 * @param transX   movement in the left and right direction
 	 * @param transY   movement in the forward and backward direction

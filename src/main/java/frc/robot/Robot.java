@@ -66,33 +66,20 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("left back ", RobotMap.leftBackEncoder.getRotation());
 		SmartDashboard.putNumber("right back ", RobotMap.rightBackEncoder.getRotation());
 
-		// // SmartDashboard.putNumber("right front error ",
-		// // RobotMap.rightFrontWheel.getPidController().getError());
-		// // SmartDashboard.putNumber("left front error ",
-		// // RobotMap.leftFrontWheel.getPidController().getError());
-		// // SmartDashboard.putNumber("left back error ",
-		// // RobotMap.leftBackWheel.getPidController().getError());
-		// // SmartDashboard.putNumber("right back error ",
-		// // RobotMap.rightBackWheel.getPidController().getError());
-		// SmartDashboard.putNumber("right front encoder",
-		// RobotMap.rightFrontEncoder.getRotation());
-		// SmartDashboard.putNumber("left front encoder",
-		// RobotMap.leftFrontEncoder.getRotation());
-		// SmartDashboard.putNumber("left back encoder",
-		// RobotMap.leftBackEncoder.getRotation());
-		// SmartDashboard.putNumber("right back encoder",
-		// RobotMap.rightBackEncoder.getRotation());
 		SmartDashboard.putNumber("transX input", OI.transX.getAsDouble());
 		SmartDashboard.putNumber("transY input", OI.transY.getAsDouble());
 		SmartDashboard.putNumber("rotation input", OI.rotation.getAsDouble());
 		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
-		SmartDashboard.putNumber("heading pid error", SubsystemMap.swerveSubsystem.getPidController().getError());
+		// SmartDashboard.putNumber("heading error", value)
+		// SmartDashboard.putNumber("heading pid error",
+		// SubsystemMap.swerveSubsystem.getPidController().getError());
 		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
 		SmartDashboard.putBoolean("upper lift limit switch", RobotMap.upperLiftLimit.get());
-		SmartDashboard.putNumber("lift input", OI.liftDrive.getAsDouble());
-		SmartDashboard.putNumber("lit maintaining pid error", SubsystemMap.lift.getPidController().getError());
+		SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
+		// SmartDashboard.putNumber("lit maintaining pid error",
+		// SubsystemMap.lift.getPidController().getError());
 
 	}
 

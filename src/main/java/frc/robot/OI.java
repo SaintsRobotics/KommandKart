@@ -10,14 +10,19 @@ package frc.robot;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import javax.swing.JToolBar;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.Configs.PidConfigs;
 import frc.robot.commands.CargoIntakeCommand;
 import frc.robot.commands.ResetGyroCommand;
+import frc.robot.commands.ToHeadingCommand;
 import frc.robot.commands.ToHeightCommand;
+import frc.robot.util.PidConfig;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -55,7 +60,9 @@ public class OI {
   // use the getRawAxis(int) and getRawButton(int) methods inherited from
   // GeneralHID
   // CONSTANT VALUES
-  private static double DRIVE_SPEED_MULTIPLIER = .4;
+  private static double DRIVE_SPEED_MULTIPLIER = .5;
+  private static double TURN_SPEED_MULTIPLIER = .5;
+
   public static int LEFT_STICK_X = 0;
   public static int LEFT_STICK_Y = 1;
   public static int RIGHT_STICK_X = 4;
@@ -81,7 +88,8 @@ public class OI {
       * oddSquare(deadZone(xboxController.getRawAxis(LEFT_STICK_X), 0.05));
   public static DoubleSupplier transY = () -> DRIVE_SPEED_MULTIPLIER
       * oddSquare(deadZone(-xboxController.getRawAxis(LEFT_STICK_Y), 0.05));
-  public static DoubleSupplier rotation = () -> deadZone(xboxController.getRawAxis(RIGHT_STICK_X), 0.2) * .5;
+  public static DoubleSupplier rotation = () -> deadZone(xboxController.getRawAxis(RIGHT_STICK_X), 0.2)
+      * TURN_SPEED_MULTIPLIER;
   public static BooleanSupplier absoluteDrive = () -> xboxController.getRawButton(RIGHT_BUMPER);
   public static Button toHeadingTrigger;
 
@@ -96,6 +104,11 @@ public class OI {
   private static Button lowerScore = new JoystickButton(oppBoard, BUTTON_A);
   private static Button cargoScore = new JoystickButton(oppBoard, BUTTON_X);
 
+  public static Button leftHeading = new JoystickButton(xboxController, BUTTON_X);
+  public static Button rightHeading = new JoystickButton(xboxController, BUTTON_B);
+  public static Button frontHeading = new JoystickButton(xboxController, BUTTON_Y);
+  public static Button backHeading = new JoystickButton(xboxController, BUTTON_A);
+
   public OI() {
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
@@ -103,6 +116,14 @@ public class OI {
     upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6500, PidConfigs.lift.value));
     lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
 
+    leftHeading.whenPressed(
+        new ToHeadingCommand(SubsystemMap.swerveSubsystem, RobotMap.gyro, 270, PidConfigs.robotHeading.value));
+    rightHeading.whenPressed(
+        new ToHeadingCommand(SubsystemMap.swerveSubsystem, RobotMap.gyro, 90, PidConfigs.robotHeading.value));
+    frontHeading.whenPressed(
+        new ToHeadingCommand(SubsystemMap.swerveSubsystem, RobotMap.gyro, 0, PidConfigs.robotHeading.value));
+    backHeading.whenPressed(
+        new ToHeadingCommand(SubsystemMap.swerveSubsystem, RobotMap.gyro, 180, PidConfigs.robotHeading.value));
   }
 
   private static double deadZone(double input, double absoluteTolerance) {

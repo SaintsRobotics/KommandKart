@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -45,12 +46,12 @@ public class LiftSubsystem extends Subsystem {
 			this.m_pidControler.setSetpoint(this.m_encoder.pidGet());
 			this.m_isMoving = false;
 		}
-		if (this.m_encoder.get() > 5500) {
+		if (this.m_encoder.get() > 5700) {
 			if (output > 0) {
 				output = SAFETYZONE_THROTTLE * output;
 			}
 		}
-		if (this.m_encoder.get() < 1500) {
+		if (this.m_encoder.get() < 750) {
 			if (output < 0) {
 				output = SAFETYZONE_THROTTLE * output;
 			}

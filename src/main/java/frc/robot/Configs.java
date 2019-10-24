@@ -31,7 +31,7 @@ public class Configs {
 	}
 
 	public enum PidConfigs {
-		swerveWhels(new PidConfig(0.02, 0, 0, 2.5)), robotHeading(new PidConfig(0.0125, 0, 0, 2)),
+		swerveWhels(new PidConfig(0.02, 0, 0, 2.5)), robotHeading(new PidConfig(0.0125, 0, 0.001, 2)),
 		arm(new PidConfig(.1, 0, 0, 0)), lift(new PidConfig(.1, 0, 0, 20));
 
 		public final PidConfig value;

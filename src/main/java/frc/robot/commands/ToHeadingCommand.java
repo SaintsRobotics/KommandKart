@@ -10,25 +10,28 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.PidConfig;
 
 /**
- * Calculates the amount the robot must rotate and simulates that as joystick movement.  The drive can still translate the robot.
- * Instantiate once for every heading, pid configs stay the same.
+ * Calculates the amount the robot must rotate and simulates that as joystick
+ * movement. The drive can still translate the robot, and driving is
+ * field-relative. Instantiate once for every heading, pid configs stay the
+ * same.
  */
 public class ToHeadingCommand extends Command {
 
-	private final double SCALE = 1;  //a value between 0 and 1 by which the pid output is scaled
+	private final double SCALE = 1; // a value between 0 and 1 by which the pid output is scaled
 
 	private SwerveSubsystem m_subsystem;
 	private DoubleSupplier m_gyro;
 	private double m_pidOutput;
-	
+
 	private double m_heading;
 	private PIDController m_pidController;
 
 	/**
 	 * 
-	 * @param trigger       what triggers this command
-	 * @param heading       the direction the robot is to face
-	 * @param pidConfig     the {@link frc.robot.util.PidConfig PidConfig} that stores p, i , and d coefficients and the absolute tolerance
+	 * @param trigger   what triggers this command
+	 * @param heading   the direction the robot is to face
+	 * @param pidConfig the {@link frc.robot.util.PidConfig PidConfig} that stores
+	 *                  p, i , and d coefficients and the absolute tolerance
 	 */
 	public ToHeadingCommand(SwerveSubsystem subsystem, PIDSource gyro, double heading, PidConfig pidConfig) {
 		this.m_subsystem = subsystem;
@@ -38,7 +41,8 @@ public class ToHeadingCommand extends Command {
 
 		this.m_heading = heading;
 
-		this.m_pidController = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, gyro, (output) -> this.m_pidOutput = output * this.SCALE);
+		this.m_pidController = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, gyro,
+				(output) -> this.m_pidOutput = output * this.SCALE);
 		this.m_pidController.setAbsoluteTolerance(pidConfig.tolerance);
 		this.m_pidController.setInputRange(0, 360);
 		this.m_pidController.setContinuous(true);
@@ -56,14 +60,16 @@ public class ToHeadingCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		//driving while going to a heading is absolute
+		// driving while going to a heading is absolute
 
 		double angle = this.m_gyro.getAsDouble();
 		double x = OI.transX.getAsDouble();
 		double y = OI.transY.getAsDouble();
-		x = (x * Math.cos(Math.toRadians(angle))) - (y * Math.sin(Math.toRadians(angle)));
-		y = (x * Math.sin(Math.toRadians(angle))) + (y * Math.cos(Math.toRadians(angle)));
-		
+		x = (OI.transX.getAsDouble() * Math.cos(Math.toRadians(angle)))
+				- (OI.transY.getAsDouble() * Math.sin(Math.toRadians(angle)));
+		y = (OI.transX.getAsDouble() * Math.sin(Math.toRadians(angle)))
+				+ (OI.transY.getAsDouble() * Math.cos(Math.toRadians(angle)));
+
 		this.m_subsystem.dynamicGainDrive(x, y, this.m_pidOutput);
 	}
 
