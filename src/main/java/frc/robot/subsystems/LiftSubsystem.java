@@ -16,7 +16,8 @@ public class LiftSubsystem extends Subsystem {
 	private Encoder m_encoder;
 	private DigitalInput m_lowerLimit;
 	private DigitalInput m_upperLimit;
-
+	private double UPPER_ENCODER_VALUE = 7000;
+	private double LOWER_ENCODER_VALUE = 750;
 	private PIDController m_pidControler;
 	private double m_pidOutput;
 	private boolean m_isMoving = false;
@@ -36,27 +37,13 @@ public class LiftSubsystem extends Subsystem {
 		this.m_pidControler.setAbsoluteTolerance(pidConfig.tolerance);
 
 	}
-
-	public void periodic() {
-		double output = this.m_pidOutput;
-		if (this.m_inputSpeed != 0) {
-			this.m_isMoving = true;
-			output = this.m_inputSpeed;
-		} else if (this.m_inputSpeed == 0.0 && this.m_isMoving) {
-			this.m_pidControler.setSetpoint(this.m_encoder.pidGet());
-			this.m_isMoving = false;
-		}
-		if (this.m_encoder.get() > 5700) {
+	public void safetyChecks(double output){
+		if (this.m_encoder.get() > UPPER_ENCODER_VALUE || this.m_encoder.get() < LOWER_ENCODER_VALUE){
 			if (output > 0) {
 				output = SAFETYZONE_THROTTLE * output;
 			}
 		}
-		if (this.m_encoder.get() < 750) {
-			if (output < 0) {
-				output = SAFETYZONE_THROTTLE * output;
-			}
-		}
-
+		
 		if (this.m_lowerLimit.get() == false) {
 			this.m_encoder.reset();
 			this.m_pidControler.setSetpoint(0);
@@ -65,24 +52,32 @@ public class LiftSubsystem extends Subsystem {
 			}
 		}
 
-		// TODO test implimentation of upper limit
 		if (this.m_upperLimit.get() == false) {
 			if (output > 0) {
 				output = 0;
 			}
 		}
-
+	}
+	public void drive(double speed) {
+		this.m_inputSpeed = speed;
+		double output = this.m_pidOutput;
+		if (this.m_inputSpeed != 0) {
+			this.m_isMoving = true;
+			output = this.m_inputSpeed;
+		} else if (this.m_inputSpeed == 0.0 && this.m_isMoving) {
+			this.m_pidControler.setSetpoint(this.m_encoder.pidGet());
+			this.m_isMoving = false;
+		}
+		
+		safetyChecks(output);
 		this.m_motor.set(output);
-
 	}
 
 	/**
 	 * @param speed usually one of two values, positive or negative. positive drives
 	 *              up, negative drives down. within the range of -1 to 1
 	 */
-	public void setSpeed(double speed) {
-		this.m_inputSpeed = speed;
-	}
+	
 
 	public PIDController getPidController() {
 		return this.m_pidControler;
