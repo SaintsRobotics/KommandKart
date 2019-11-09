@@ -9,6 +9,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -39,7 +40,8 @@ public class RobotMap {
 			Configs.PidConfigs.swerveWhels.value, Configs.Locations.rightFront.value);
 
 	public static SpeedController leftFrontDrive = new CANSparkMax(8, MotorType.kBrushless);
-	public static SpeedController leftFrontTurn = new WPI_VictorSPX(4);
+	public static SpeedController leftFrontTurn = new WPI_VictorSPX(3);
+
 	public static AbsoluteEncoder leftFrontEncoder = new AbsoluteEncoder(1, Configs.WheelOffsets.leftFront.value, true);
 	public static SwerveWheel leftFrontWheel = new SwerveWheel(leftFrontDrive, leftFrontTurn, leftFrontEncoder,
 			Configs.PidConfigs.swerveWhels.value, Configs.Locations.leftFront.value);;
@@ -65,10 +67,10 @@ public class RobotMap {
 	public static DigitalInput upperLiftLimit = new DigitalInput(0);
 
 	// Cargo Intake
-	public static SpeedController cargoIntake = new WPI_VictorSPX(3);
+	public static SpeedController cargoIntake = new WPI_VictorSPX(4);
 
 	// Arm
-	public static CANSparkMax arm = new CANSparkMax(6, MotorType.kBrushless);
+	public static CANSparkMax arm = new CANSparkMax(11, MotorType.kBrushless);
 	public static CANEncoder armEncoder = arm.getEncoder();
 
 	public RobotMap() {
