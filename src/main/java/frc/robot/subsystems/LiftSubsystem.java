@@ -37,26 +37,27 @@ public class LiftSubsystem extends Subsystem {
 		this.m_pidControler.setAbsoluteTolerance(pidConfig.tolerance);
 
 	}
-	public void safetyChecks(double output){
+	public double safetyChecks(double input){
 		if (this.m_encoder.get() > UPPER_ENCODER_VALUE || this.m_encoder.get() < LOWER_ENCODER_VALUE){
-			if (output > 0) {
-				output = SAFETYZONE_THROTTLE * output;
+			if (input > 0) {
+				input = SAFETYZONE_THROTTLE * input;
 			}
 		}
 		
 		if (this.m_lowerLimit.get() == false) {
 			this.m_encoder.reset();
 			this.m_pidControler.setSetpoint(0);
-			if (output < 0) {
-				output = 0;
+			if (input < 0) {
+				input = 0;
 			}
 		}
 
 		if (this.m_upperLimit.get() == false) {
-			if (output > 0) {
-				output = 0;
+			if (input > 0) {
+				input = 0;
 			}
 		}
+		return input;
 	}
 	public void drive(double speed) {
 		this.m_inputSpeed = speed;
@@ -69,8 +70,8 @@ public class LiftSubsystem extends Subsystem {
 			this.m_isMoving = false;
 		}
 		
-		safetyChecks(output);
-		this.m_motor.set(output);
+		
+		this.m_motor.set(safetyChecks(output));
 	}
 
 	/**
