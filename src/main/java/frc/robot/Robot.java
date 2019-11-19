@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -61,7 +62,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation());
+		SmartDashboard.putBoolean("5v enabled ", RobotController.getEnabled5V());
+		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation() );
 		SmartDashboard.putNumber("left front ", RobotMap.leftFrontEncoder.getRotation());
 		SmartDashboard.putNumber("left back ", RobotMap.leftBackEncoder.getRotation());
 		SmartDashboard.putNumber("right back ", RobotMap.rightBackEncoder.getRotation());
@@ -70,16 +72,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("transY input", OI.transY.getAsDouble());
 		SmartDashboard.putNumber("rotation input", OI.rotation.getAsDouble());
 		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
-		// SmartDashboard.putNumber("heading error", value)
-		// SmartDashboard.putNumber("heading pid error",
-		// SubsystemMap.swerveSubsystem.getPidController().getError());
 		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
 		SmartDashboard.putBoolean("upper lift limit switch", RobotMap.upperLiftLimit.get());
 		SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
-		// SmartDashboard.putNumber("lit maintaining pid error",
-		// SubsystemMap.lift.getPidController().getError());
 
 	}
 
@@ -151,6 +148,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		
 	}
 
 	/**
