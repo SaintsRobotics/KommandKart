@@ -94,6 +94,8 @@ public class OI {
   public static Button toHeadingTrigger;
 
   public static DoubleSupplier liftDrive = () -> deadZone(-oppBoard.getRawAxis(LEFT_STICK_Y), 0.2);
+public static BooleanSupplier liftOverride = () -> oppBoard.getRawButton(START_BUTTON);
+
   public static DoubleSupplier armDrive = () -> deadZone(-oppBoard.getRawAxis(RIGHT_STICK_Y), 0.2);
 
   public static BooleanSupplier intakeIn = () -> oppBoard.getRawButton(LEFT_BUMBER);

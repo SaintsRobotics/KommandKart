@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -7,6 +9,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.OI;
 import frc.robot.commands.LiftDriveCommand;
 import frc.robot.util.PidConfig;
 
@@ -16,12 +19,12 @@ public class LiftSubsystem extends Subsystem {
 	private Encoder m_encoder;
 	private DigitalInput m_lowerLimit;
 	private DigitalInput m_upperLimit;
-	private double UPPER_ENCODER_VALUE = 7000;
+	private double UPPER_ENCODER_VALUE = 5000;
 	private double LOWER_ENCODER_VALUE = 750;
 	private PIDController m_pidControler;
 	private double m_pidOutput;
 	private boolean m_isMoving = false;
-	private double SAFETYZONE_THROTTLE = 0.3;
+	private double SAFETYZONE_THROTTLE = 0.2;
 	private double m_inputSpeed;
 
 	public LiftSubsystem(SpeedController motor, Encoder encoder, DigitalInput lowerLimit, DigitalInput upperLimit,
@@ -35,30 +38,40 @@ public class LiftSubsystem extends Subsystem {
 		this.m_pidControler = new PIDController(pidConfig.kP, pidConfig.kI, pidConfig.kD, encoder,
 				(output) -> this.m_pidOutput = output);
 		this.m_pidControler.setAbsoluteTolerance(pidConfig.tolerance);
+		this.m_pidControler.setAbsoluteTolerance(pidConfig.tolerance);
+		this.m_pidControler.setOutputRange(-1, 1);
+		this.m_pidControler.setInputRange(0, 5800);
+		this.m_pidControler.reset();
+		this.m_pidControler.enable();
+
 
 	}
-	public double safetyChecks(double input){
-		if (this.m_encoder.get() > UPPER_ENCODER_VALUE || this.m_encoder.get() < LOWER_ENCODER_VALUE){
-			if (input > 0) {
-				input = SAFETYZONE_THROTTLE * input;
-			}
+
+	public double safetyChecks(double input) {
+		if ((this.m_encoder.get() > UPPER_ENCODER_VALUE && input > 0)
+				|| (this.m_encoder.get() < LOWER_ENCODER_VALUE && input < 0)) {
+
+			input = SAFETYZONE_THROTTLE * input;
+
 		}
-		
+
 		if (this.m_lowerLimit.get() == false) {
 			this.m_encoder.reset();
 			this.m_pidControler.setSetpoint(0);
-			if (input < 0) {
-				input = 0;
-			}
 		}
 
-		if (this.m_upperLimit.get() == false) {
+		if (this.m_encoder.get() <= 0 && !OI.liftOverride.getAsBoolean() && input < 0) {
+			input = 0;
+		}
+
+		else if (this.m_upperLimit.get() == false) {
 			if (input > 0) {
 				input = 0;
 			}
 		}
 		return input;
 	}
+
 	public void drive(double speed) {
 		this.m_inputSpeed = speed;
 		double output = this.m_pidOutput;
@@ -69,8 +82,10 @@ public class LiftSubsystem extends Subsystem {
 			this.m_pidControler.setSetpoint(this.m_encoder.pidGet());
 			this.m_isMoving = false;
 		}
-		
-		
+
+		SmartDashboard.putNumber("lift pid error ", this.m_pidControler.getError());
+		SmartDashboard.putNumber("lift pid output ", this.m_pidControler.get());
+		SmartDashboard.putBoolean("lift is moving", this.m_isMoving);
 		this.m_motor.set(safetyChecks(output));
 	}
 
@@ -78,7 +93,6 @@ public class LiftSubsystem extends Subsystem {
 	 * @param speed usually one of two values, positive or negative. positive drives
 	 *              up, negative drives down. within the range of -1 to 1
 	 */
-	
 
 	public PIDController getPidController() {
 		return this.m_pidControler;
