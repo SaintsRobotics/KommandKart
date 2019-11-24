@@ -45,7 +45,7 @@ public class ToHeightCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		this.m_subsystem.setSpeed(this.m_pidOutput);
+		this.m_subsystem.drive(this.m_pidOutput);
 		SmartDashboard.putNumber("pid error ", this.m_pidController.getError());
 	}
 

@@ -75,8 +75,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
 		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
 		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
-		SmartDashboard.putBoolean("upper lift limit switch", RobotMap.upperLiftLimit.get());
+		SmartDashboard.putBoolean("lower lift limit switch", RobotMap.lowerLiftLimit.get());
 		SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
+		SmartDashboard.putNumber("lift input ", OI.liftDrive.getAsDouble());
 
 	}
 
