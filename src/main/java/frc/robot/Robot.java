@@ -9,10 +9,8 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.networktables.NetworkTable;
+
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,19 +23,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
- * project?
+ * project.
  */
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static RobotMap m_robotMap;
 	public static SubsystemMap m_subsystemMap;
-	private NetworkTable limelight;
+
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
-	 * for any initialization code?
+	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
@@ -50,8 +48,6 @@ public class Robot extends TimedRobot {
 		RobotMap.gyro.reset();
 		// chooser.addOption("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
-
-		limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
 	}
 
@@ -67,7 +63,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		SmartDashboard.putBoolean("5v enabled ", RobotController.getEnabled5V());
-		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation());
+		SmartDashboard.putNumber("right front ", RobotMap.rightFrontEncoder.getRotation() );
 		SmartDashboard.putNumber("left front ", RobotMap.leftFrontEncoder.getRotation());
 		SmartDashboard.putNumber("left back ", RobotMap.leftBackEncoder.getRotation());
 		SmartDashboard.putNumber("right back ", RobotMap.rightBackEncoder.getRotation());
@@ -76,16 +72,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("transY input", OI.transY.getAsDouble());
 		SmartDashboard.putNumber("rotation input", OI.rotation.getAsDouble());
 		SmartDashboard.putNumber("gyro value", RobotMap.gyro.getAngle());
-		SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
-		SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
-		SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
-		SmartDashboard.putBoolean("lower lift limit switch", RobotMap.lowerLiftLimit.get());
-		SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
-		SmartDashboard.putNumber("lift input ", OI.liftDrive.getAsDouble());
-
-		SmartDashboard.putNumber("Limelight X Offset", limelight.getEntry("tx").getDouble(0));
-		SmartDashboard.putNumber("Limelight Y Offset", limelight.getEntry("ty").getDouble(0));
-		SmartDashboard.putNumber("Area offset", limelight.getEntry("ta").getDouble(0));
+		// SmartDashboard.putNumber("arm speed ", RobotMap.arm.get());
+		// SmartDashboard.putNumber("arm position", RobotMap.armEncoder.getPosition());
+		// SmartDashboard.putNumber("lift position", RobotMap.liftEncoder.getDistance());
+		// SmartDashboard.putBoolean("lower lift limit switch", RobotMap.lowerLiftLimit.get());
+		// SmartDashboard.putNumber("lift speed", RobotMap.lift.get());
+		// SmartDashboard.putNumber("lift input ", OI.liftDrive.getAsDouble());
 
 	}
 
@@ -158,6 +150,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
+		
 	}
 
 	/**
@@ -165,7 +158,5 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-
 	}
-
 }

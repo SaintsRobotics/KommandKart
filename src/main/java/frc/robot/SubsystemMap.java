@@ -31,11 +31,11 @@ public class SubsystemMap {
 				new double[] { 0, 0 }, () -> ((RobotMap.gyro.getAngle() % 360) + 360) % 360,
 				PidConfigs.robotHeading.value);
 
-		arms = new ArmsSubsystem(RobotMap.arm, new CANEncoderPidSource(RobotMap.armEncoder), PidConfigs.arm.value);
-		cargoIntake = new CargoIntakeSubsystem(RobotMap.cargoIntake);
+		// arms = new ArmsSubsystem(RobotMap.arm, new CANEncoderPidSource(RobotMap.armEncoder), PidConfigs.arm.value);
+		// cargoIntake = new CargoIntakeSubsystem(RobotMap.cargoIntake);
 
-		lift = new LiftSubsystem(RobotMap.lift, RobotMap.liftEncoder, RobotMap.lowerLiftLimit, RobotMap.upperLiftLimit,
-				PidConfigs.lift.value);
+		// lift = new LiftSubsystem(RobotMap.lift, RobotMap.liftEncoder, RobotMap.lowerLiftLimit, RobotMap.upperLiftLimit,
+		// 		PidConfigs.lift.value);
 
 	}
 }

@@ -114,9 +114,9 @@ public static BooleanSupplier liftOverride = () -> oppBoard.getRawButton(START_B
   public OI() {
 
     resetGyro.whenPressed(new ResetGyroCommand(RobotMap.gyro));
-    cargoScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 2750, PidConfigs.lift.value));
-    upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6500, PidConfigs.lift.value));
-    lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
+    // cargoScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 2750, PidConfigs.lift.value));
+    // upperScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 6500, PidConfigs.lift.value));
+    // lowerScore.whenPressed(new ToHeightCommand(SubsystemMap.lift, RobotMap.liftEncoder, 0, PidConfigs.lift.value));
 
     leftHeading.whenPressed(
         new ToHeadingCommand(SubsystemMap.swerveSubsystem, RobotMap.gyro, 270, PidConfigs.robotHeading.value));

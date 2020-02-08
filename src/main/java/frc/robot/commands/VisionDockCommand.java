@@ -54,8 +54,6 @@ public class VisionDockCommand extends Command {
 		this.m_distancePid.setInputRange(-20, 20);
 		this.m_distancePid.setContinuous(false);
 		this.m_distancePid.reset();
-		
-		/* NOTE: The ranges and pid coefficients need to be tuned, along with scales */
 	}
 
 	// Called just before this Command runs the first time
@@ -86,7 +84,6 @@ public class VisionDockCommand extends Command {
 	@Override
 	protected void execute() {
 		this.m_subsystem.staticGainDrive(this.m_translationOutput, this.m_distanceOutput, 0);
-		/* NOTE: It doesn't matter static vs dynamic gain drive because we're not rotating while docking.  We are already aligned properly. */
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -17,7 +17,7 @@ public class Configs {
 
 	// Swerve Wheel Offsets
 	public enum WheelOffsets {
-		rightFront(-236), leftFront(-62), leftBack(-335), rightBack(-156.7);
+		rightFront(-237), leftFront(-246), leftBack(-240), rightBack(-156);
 
 		public final double value;
 
